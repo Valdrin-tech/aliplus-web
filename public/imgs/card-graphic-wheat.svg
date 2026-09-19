@@ -1,0 +1,12 @@
+<svg width="260" height="240" viewBox="0 0 260 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g opacity="0.12" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M130 230V60"/>
+    <path d="M130 90c-30-5-50-30-52-58 30 4 50 28 52 58z"/>
+    <path d="M130 90c30-5 50-30 52-58-30 4-50 28-52 58z"/>
+    <path d="M130 130c-30-5-50-30-52-58 30 4 50 28 52 58z"/>
+    <path d="M130 130c30-5 50-30 52-58-30 4-50 28-52 58z"/>
+    <path d="M130 170c-30-5-50-30-52-58 30 4 50 28 52 58z"/>
+    <path d="M130 170c30-5 50-30 52-58-30 4-50 28-52 58z"/>
+    <path d="M130 60c-8-15-6-35 0-50 6 15 8 35 0 50z"/>
+  </g>
+</svg>

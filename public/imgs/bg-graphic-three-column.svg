@@ -1,0 +1,18 @@
+<svg width="420" height="800" viewBox="0 0 420 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g opacity="0.1" fill="#ffffff">
+    <path d="M60 40c70-30 150-10 190 60s20 170-40 220S70 350 30 290-10 70 60 40z"/>
+    <path d="M-20 420c60-40 150-30 210 30s70 160 20 220-150 70-210 20S-80 460-20 420z"/>
+    <ellipse cx="300" cy="640" rx="120" ry="150" transform="rotate(-20 300 640)"/>
+    <circle cx="90" cy="120" r="10"/>
+    <circle cx="130" cy="150" r="7"/>
+    <circle cx="70" cy="180" r="6"/>
+    <circle cx="120" cy="210" r="9"/>
+    <circle cx="160" cy="100" r="6"/>
+    <circle cx="40" cy="480" r="8"/>
+    <circle cx="80" cy="520" r="6"/>
+    <circle cx="120" cy="560" r="10"/>
+    <circle cx="60" cy="600" r="7"/>
+    <circle cx="330" cy="560" r="8"/>
+    <circle cx="350" cy="700" r="6"/>
+  </g>
+</svg>

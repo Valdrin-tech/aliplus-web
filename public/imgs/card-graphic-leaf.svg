@@ -1,0 +1,9 @@
+<svg width="260" height="240" viewBox="0 0 260 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g opacity="0.12" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M40 210C40 110 110 40 220 30c10 110-60 180-160 180z"/>
+    <path d="M40 210 220 30"/>
+    <path d="M90 160c25-10 45-30 55-55"/>
+    <path d="M70 185c40-8 75-35 95-70"/>
+    <path d="M120 130c10-30 30-50 55-60"/>
+  </g>
+</svg>

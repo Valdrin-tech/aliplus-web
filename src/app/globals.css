@@ -1,0 +1,1644 @@
+@import "tailwindcss";
+
+:root {
+  /* Logo-matched brand palette */
+  --bg-cream: #fafcf6;
+  --white: #ffffff;
+  --dark: #1a2e12;
+  --forest: #4a8c1c;
+  --olive: #8bc34a;
+  --lime: #9ccc65;
+  --accent: #c11c84;
+  --accent-deep: #9e156b;
+  --soft-green: #eaf6d4;
+  --soft-pink: #fce8f3;
+  /* Section / card greens (roles mirror pastureforlife.org light/mid/dark green) */
+  --moss: #386b29;
+  --pine: #22452f;
+  --text: #1f2b18;
+  --muted: #6b7a62;
+  --nav-link: #4a8c1c;
+  --nav-link-hover: #4a8c1c;
+  --nav-underline: #8bc34a;
+}
+
+@theme inline {
+  --color-cream: var(--bg-cream);
+  --color-surface: var(--white);
+  --color-dark: var(--dark);
+  --color-forest: var(--forest);
+  --color-olive: var(--olive);
+  --color-lime: var(--lime);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-soft: var(--soft-green);
+  --color-soft-pink: var(--soft-pink);
+  --color-moss: var(--moss);
+  --color-pine: var(--pine);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-source);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #ffffff;
+  color: var(--text);
+  font-family: var(--font-source), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-fraunces), Georgia, serif;
+}
+
+.font-hero {
+  font-family: var(--font-hero), "Times New Roman", Times, serif;
+}
+
+.font-nav {
+  font-family: var(--font-nav), Impact, Haettenschweiler, sans-serif;
+}
+
+.font-stamp {
+  font-family: var(--font-stamp), Impact, Haettenschweiler, sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  color: var(--dark);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.card-surface {
+  background: var(--white);
+  border: 1px solid color-mix(in srgb, var(--olive) 22%, transparent);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--accent) 6%, transparent),
+    0 24px 48px -32px color-mix(in srgb, var(--dark) 22%, transparent);
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+
+.icon-brand {
+  color: var(--forest);
+}
+
+.nav-link {
+  position: relative;
+  color: var(--nav-link);
+  font-weight: 400;
+  line-height: 1.45;
+  text-decoration: none;
+  background: transparent;
+  box-shadow: none;
+  transition: font-weight 0.2s ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0.85rem;
+  right: 0.85rem;
+  bottom: 0.2rem;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--nav-underline);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.22s ease;
+  pointer-events: none;
+}
+
+.nav-link:hover,
+.nav-link:active,
+.nav-link--active {
+  color: var(--nav-link);
+  font-weight: 600;
+  background: transparent;
+  box-shadow: none;
+}
+
+.nav-link:hover::after,
+.nav-link:active::after,
+.nav-link--active::after,
+.nav-link--active:hover::after {
+  transform: scaleX(1);
+}
+
+.nav-link--active:hover {
+  color: var(--nav-link);
+  font-weight: 700;
+}
+
+/* Pasture-style header nav */
+.site-nav-link {
+  font-family: var(--font-nav), Impact, Haettenschweiler, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  color: var(--forest);
+  text-decoration: none;
+  text-transform: none;
+  padding: 0.35rem 0.15rem;
+  border-bottom: 2px solid transparent;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.site-nav-link:hover,
+.site-nav-link.is-active {
+  color: var(--forest);
+  border-bottom-color: var(--olive);
+}
+
+.header-join-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  background: var(--forest);
+  color: #fff;
+  font-family: var(--font-nav), Impact, Haettenschweiler, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.65rem 1.15rem;
+  box-shadow: 0 8px 20px -12px color-mix(in srgb, var(--forest) 55%, transparent);
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.header-join-btn:hover,
+.header-join-btn.is-active {
+  background: color-mix(in srgb, var(--forest) 88%, var(--dark));
+  transform: translateY(-1px);
+  color: #fff;
+}
+
+.nav-help-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--forest) 22%, transparent);
+  background: var(--forest);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.45;
+  text-decoration: none;
+  box-shadow: 0 8px 24px -12px color-mix(in srgb, var(--forest) 55%, transparent);
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.nav-help-btn:hover,
+.nav-help-btn:active {
+  background: color-mix(in srgb, var(--forest) 88%, var(--dark));
+  box-shadow: 0 12px 28px -12px color-mix(in srgb, var(--forest) 50%, transparent);
+  transform: translateY(-1px);
+  color: #fff;
+}
+
+.nav-help-btn--active {
+  background: var(--olive);
+  border-color: color-mix(in srgb, var(--olive) 40%, transparent);
+  box-shadow: 0 8px 24px -12px color-mix(in srgb, var(--olive) 55%, transparent);
+}
+
+.nav-help-btn--active:hover {
+  background: color-mix(in srgb, var(--olive) 85%, var(--forest));
+}
+
+/* ── Classic soft dissolve route transition ── */
+.page-fade {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.page-fade.is-active {
+  visibility: visible;
+  pointer-events: all;
+}
+
+.page-fade__stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.page-fade__veil {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  animation: page-fade-veil 1200ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  will-change: opacity;
+}
+
+.page-fade__rule {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(42vw, 280px);
+  height: 1px;
+  transform: translate(-50%, 72px);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent),
+    var(--olive),
+    transparent
+  );
+  opacity: 0.55;
+  animation: page-fade-rule 1200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform;
+}
+
+.page-fade__brand {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: page-fade-brand 1200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform;
+}
+
+@keyframes page-fade-veil {
+  0% {
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes page-fade-brand {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  22% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  70% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
+@keyframes page-fade-rule {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 72px) scaleX(0.35);
+  }
+  28% {
+    opacity: 0.55;
+    transform: translate(-50%, 72px) scaleX(1);
+  }
+  70% {
+    opacity: 0.55;
+    transform: translate(-50%, 72px) scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 72px) scaleX(0.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-fade {
+    display: none !important;
+  }
+}
+
+/* ── Pasture-style full-bleed hero ── */
+.hero-pasture__photo {
+  object-fit: cover;
+  object-position: 46% 42%;
+}
+
+.hero-pasture__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to bottom,
+      rgb(0 0 0 / 0.42) 0%,
+      rgb(0 0 0 / 0.28) 38%,
+      rgb(0 0 0 / 0.58) 100%
+    ),
+    radial-gradient(
+      ellipse 78% 62% at 50% 46%,
+      rgb(0 0 0 / 0.38),
+      transparent 72%
+    );
+}
+
+.hero-pasture__inner {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100svh;
+  min-height: 100dvh;
+  padding-inline: clamp(1.15rem, 4.2vw, 3rem);
+  padding-top: max(6.25rem, calc(env(safe-area-inset-top, 0px) + 5.75rem));
+  padding-bottom: max(5.75rem, calc(env(safe-area-inset-bottom, 0px) + 5.25rem));
+}
+
+.hero-content {
+  width: min(100%, 68rem);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.hero-pasture--home .hero-content {
+  width: min(100%, 92rem);
+  transform: translateY(1.75rem);
+}
+
+@media (min-width: 768px) {
+  .hero-pasture--home .hero-content {
+    transform: translateY(2.25rem);
+  }
+}
+
+.hero-pasture--home .hero-pasture__inner {
+  padding-bottom: max(9.25rem, calc(env(safe-area-inset-bottom, 0px) + 8.75rem));
+}
+
+@media (min-width: 1280px) {
+  .hero-pasture--home .hero-pasture__inner {
+    padding-inline: clamp(1.5rem, 3vw, 2.5rem);
+  }
+}
+
+.hero-stamp-wrap {
+  position: relative;
+  display: block;
+  width: 100%;
+  container-type: inline-size;
+}
+
+/* Type mirrors pastureforlife.org `.home .hero h1`:
+   YWFT Ultramagnetic Rough 400 / uppercase / letter-spacing -3.04px / line-height 1 */
+.hero-stamp {
+  margin: 0;
+  font-family: var(--font-stamp), "Arial Black", Impact, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.024em;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hero-pasture--home .hero-stamp {
+  line-height: 0.96;
+  font-size: clamp(1.5rem, 6.2vw + 0.2rem, 6.15rem);
+}
+
+@supports (font-size: 1cqi) {
+  .hero-pasture--home .hero-stamp {
+    font-size: clamp(1.5rem, 8.8cqi, 6.15rem);
+  }
+}
+
+.hero-lead {
+  margin-inline: auto;
+  margin-top: clamp(0.9rem, 2.2vh, 1.5rem);
+  max-width: min(44rem, 100%);
+  font-size: clamp(0.95rem, 0.4vw + 0.84rem, 1.15rem);
+  font-weight: 700;
+  line-height: 1.4;
+  color: #fff;
+  text-wrap: pretty;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem 1rem;
+  margin-top: clamp(1.15rem, 3vh, 2rem);
+}
+
+@media (min-width: 768px) {
+  .hero-pasture__photo {
+    object-position: 40% 44%;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-pasture__photo {
+    object-position: 36% 42%;
+  }
+}
+
+@media (max-height: 700px) {
+  .hero-pasture__inner {
+    min-height: auto;
+    padding-top: 5.75rem;
+    padding-bottom: 5rem;
+  }
+
+  .hero-pasture--home .hero-pasture__inner {
+    padding-bottom: 7.5rem;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+  .hero-pasture__inner {
+    min-height: 100svh;
+    padding-top: 4.75rem;
+    padding-bottom: 4.25rem;
+  }
+
+  .hero-pasture--home .hero-pasture__inner {
+    padding-bottom: 6.25rem;
+  }
+
+  .hero-pasture--home .hero-stamp {
+    font-size: clamp(1.35rem, 9.5vh, 2.85rem);
+  }
+
+  .hero-lead {
+    margin-top: 0.7rem;
+    font-size: 0.95rem;
+    max-width: 36rem;
+  }
+
+  .hero-actions {
+    margin-top: 0.85rem;
+  }
+}
+
+/* Solid white underneath — always readable */
+.hero-stamp--base {
+  position: relative;
+  z-index: 0;
+  color: #ffffff;
+  text-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.35),
+    0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+/* Distressed vintage ink on top */
+.hero-stamp--distress {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  color: #f7f5ef;
+  filter: url(#hero-distress);
+  opacity: 0.92;
+  pointer-events: none;
+  text-shadow: none;
+}
+
+/* Brand-accent periods in the hero title */
+.hero-stamp__mark {
+  color: var(--accent);
+  text-shadow: none;
+}
+
+.hero-stamp--base .hero-stamp__mark {
+  text-shadow:
+    0 1px 0 color-mix(in srgb, var(--accent) 45%, transparent),
+    0 6px 18px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.hero-stamp--distress .hero-stamp__mark {
+  color: color-mix(in srgb, var(--accent) 85%, #fff);
+}
+
+/* Key words — brand green */
+.hero-stamp__word {
+  color: var(--olive);
+  text-shadow: none;
+}
+
+.hero-stamp--base .hero-stamp__word {
+  color: var(--olive);
+  text-shadow:
+    0 1px 0 color-mix(in srgb, var(--forest) 40%, transparent),
+    0 6px 18px color-mix(in srgb, var(--forest) 30%, transparent);
+}
+
+.hero-stamp--distress .hero-stamp__word {
+  color: color-mix(in srgb, var(--olive) 80%, #fff);
+}
+
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 99px;
+  padding: clamp(0.78rem, 1.1vh + 0.5rem, 1rem) clamp(1.25rem, 1.8vw + 0.7rem, 2rem);
+  font-family: var(--font-stamp), "Arial Black", Impact, sans-serif;
+  font-size: clamp(0.75rem, 0.18vw + 0.72rem, 0.875rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #fff;
+  white-space: nowrap;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 12px 28px -14px rgba(0, 0, 0, 0.4);
+}
+
+.hero-pill:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+  color: #fff;
+}
+
+.hero-pill--green {
+  background: var(--forest);
+}
+
+.hero-pill--pink {
+  background: var(--accent);
+}
+
+.hero-torn {
+  line-height: 0;
+}
+
+/* ── pastureforlife.org design-system primitives ─────────────────────────
+   .container  → width:100%; padding 0 20px; max-width 73rem from 73rem up
+   h2          → 2.625rem / 3.75rem@lg, uppercase, tracking -2.4px, lh 1
+   h3          → 2.25rem / 3rem@lg, tracking -1.92px, lh 1
+   .btn        → inline-flex pill, 1rem 2rem, .875rem uppercase display font
+   .btn--dark-green-inverted → white bg + green text; hover inverts   */
+.container-pfl {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+@media (min-width: 73rem) {
+  .container-pfl {
+    max-width: 73rem;
+  }
+}
+
+.pfl-h2 {
+  margin-bottom: 1rem;
+  font-family: var(--font-stamp), "Arial Black", Impact, sans-serif;
+  font-weight: 400;
+  font-size: 2.625rem;
+  line-height: 1;
+  letter-spacing: -2.4px;
+  text-transform: uppercase;
+}
+
+.pfl-h3 {
+  margin-bottom: 1rem;
+  font-family: var(--font-stamp), "Arial Black", Impact, sans-serif;
+  font-weight: 400;
+  font-size: 2.25rem;
+  line-height: 1;
+  letter-spacing: -1.92px;
+}
+
+/* PfL `.subheading` — small uppercase condensed, light green */
+.pfl-subheading {
+  margin-bottom: 0.25rem;
+  font-family: var(--font-nav), Impact, sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 140%;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--forest);
+}
+
+/* PfL `h5` — condensed bold statement, dark green, 1.5rem → 1.75rem@lg */
+.pfl-h5 {
+  margin-bottom: 1rem;
+  font-family: var(--font-nav), Impact, sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1.1em;
+  letter-spacing: 0;
+  color: var(--pine);
+}
+
+/* PfL `.lead-paragraph` — 1.25rem / 1.75rem body copy */
+.pfl-lead {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  color: var(--text);
+}
+
+/* Rich-text rhythm inside editorial blocks (PfL inserts empty <p> spacers) */
+.pfl-content > * + * {
+  margin-top: 1.5rem;
+}
+
+.pfl-content > .pfl-h5 + .pfl-h5 {
+  margin-top: 0;
+}
+
+@media (min-width: 1024px) {
+  .pfl-h2 {
+    font-size: 3.75rem;
+  }
+
+  .pfl-h3 {
+    font-size: 3rem;
+  }
+
+  .pfl-h5 {
+    font-size: 1.75rem;
+  }
+}
+
+.pfl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  border-radius: 99px;
+  border: 1px solid transparent;
+  padding: 1rem 2rem;
+  font-family: var(--font-stamp), "Arial Black", Impact, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    padding 0.75s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.pfl-btn--green {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: #ffffff;
+}
+
+.pfl-btn--green:hover {
+  background: var(--pine);
+  border-color: var(--pine);
+  color: #ffffff;
+}
+
+.pfl-btn--inverted {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: var(--pine);
+}
+
+.pfl-btn--inverted:hover {
+  background: var(--pine);
+  border-color: var(--pine);
+  color: #ffffff;
+}
+
+.accordion-images__title {
+  margin: 0;
+  font-family: var(--font-nav), Impact, sans-serif;
+  font-size: 1.65rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: #ffffff;
+}
+
+@media (min-width: 1024px) {
+  .accordion-images__title {
+    font-size: 2rem;
+    line-height: 1.15;
+  }
+}
+
+.accordion-images__card {
+  position: relative;
+  border-radius: 0.75rem;
+  padding: 1.5rem 2rem 1.9rem;
+}
+
+.accordion-images__card + .accordion-images__card {
+  margin-top: -0.85rem;
+}
+
+.accordion-images__card.is-open {
+  padding-bottom: 2.5rem;
+}
+
+.accordion-images__toggle {
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0;
+  border: 0;
+  background: none;
+  padding: 0;
+  text-align: left;
+  color: inherit;
+  outline: none;
+  box-shadow: none;
+  appearance: none;
+}
+
+.accordion-images__toggle:focus,
+.accordion-images__toggle:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.accordion-images__toggle.is-open {
+  margin-bottom: 2.25rem;
+}
+
+.accordion-images__toggle.is-last {
+  margin-bottom: 0;
+}
+
+.accordion-images__icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.accordion-images__body {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.5s ease;
+}
+
+.accordion-images__body.is-open {
+  max-height: 24rem;
+}
+
+.accordion-photo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.accordion-photo__frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 6px solid #f3ebd6;
+  background: #d9cfb8;
+  box-shadow: 0 0 0 1px rgb(120 96 60 / 0.2);
+}
+
+.accordion-photo__frame img {
+  filter: sepia(0.1) contrast(1.03) saturate(0.97) brightness(1.02);
+}
+
+@media (min-width: 768px) {
+  .accordion-photo {
+    position: absolute;
+    inset: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .accordion-photo {
+    aspect-ratio: 4 / 3;
+    height: auto;
+  }
+}
+
+.impact-section p {
+  font-size: 1rem;
+  line-height: 140%;
+  margin-bottom: 0.25rem;
+}
+
+/* ── /products/aliplus ───────────────────────────────────────────────── */
+
+/* Pink "22 kg / ton" stamp floating over the framed grain photo */
+.product-stamp {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 8.5rem;
+  height: 8.5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  text-align: center;
+  transform: rotate(-8deg);
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.45);
+  outline: 3px dashed rgba(255, 255, 255, 0.55);
+  outline-offset: -0.7rem;
+}
+
+.product-stamp__num {
+  font-family: var(--font-stamp), "Arial Black", Impact, sans-serif;
+  font-size: 2.25rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.product-stamp__label {
+  margin-top: 0.35rem;
+  max-width: 6rem;
+  font-family: var(--font-nav), Impact, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.15;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+@media (min-width: 640px) {
+  .product-stamp {
+    width: 10rem;
+    height: 10rem;
+  }
+  .product-stamp__num {
+    font-size: 2.75rem;
+  }
+}
+
+/* Round green icon disc for the three highlights */
+.highlight-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 50%;
+  background: var(--soft-green);
+  color: var(--forest);
+}
+
+/* Check list under "Drithërat Aliplus" */
+.check-dot {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--forest);
+  color: #fff;
+}
+
+.check-item {
+  font-family: var(--font-nav), Impact, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--pine);
+}
+
+/* Numbered steps in "Vendosja e Aliplus" */
+.step-num {
+  flex: none;
+  font-family: var(--font-stamp), "Arial Black", Impact, sans-serif;
+  font-size: 2.75rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+}
+
+@media (min-width: 1024px) {
+  .step-num {
+    font-size: 3.25rem;
+  }
+}
+
+/* ── /usage-guide ────────────────────────────────────────────────────── */
+
+.guide-panel {
+  background: #f7f4ec;
+}
+
+.guide-note {
+  border-radius: 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--olive) 28%, transparent);
+  background: color-mix(in srgb, var(--soft-green) 55%, white);
+  padding: 1.25rem 1.5rem;
+}
+
+.guide-stamp-label {
+  font-family: var(--font-stamp), "Arial Black", Impact, sans-serif;
+  font-size: 1.75rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.guide-obj-heading {
+  font-family: var(--font-nav), Impact, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--olive);
+}
+
+/* ── /contact — PfL enquire layout ──────────────────────────────────── */
+
+.contact-panel {
+  background-color: #f4f6f6;
+  background-image: url(/imgs/bg-contact-section.svg);
+  background-position: left bottom;
+  background-repeat: no-repeat;
+}
+
+.contact-form-title {
+  margin-bottom: 2rem;
+  font-family: var(--font-nav), Impact, sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--pine);
+}
+
+@media (min-width: 1024px) {
+  .contact-form-title {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+}
+
+.contact-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--pine);
+}
+
+.contact-label.is-error,
+.contact-error {
+  color: #c1121f;
+}
+
+.contact-error {
+  margin: 0 0 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.pfl-input {
+  width: 100%;
+  border-radius: 30px;
+  border: 1px solid #dfe6e3;
+  background: #ffffff;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.pfl-input:focus {
+  border-color: var(--pine);
+}
+
+.pfl-input.is-error {
+  border-color: #c1121f;
+}
+
+.pfl-input--area {
+  min-height: 6.75rem;
+  border-radius: 1.5rem;
+  resize: vertical;
+}
+
+.pfl-select {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-radius: 30px;
+  border: 1px solid #dfe6e3;
+  background: #ffffff;
+  padding: 0.28rem 0.28rem 0.28rem 1.25rem;
+  text-align: left;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.pfl-select:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--pine) 45%, transparent);
+  outline-offset: 2px;
+}
+
+.pfl-select.is-error {
+  border-color: #c1121f;
+}
+
+.pfl-select__chevron {
+  display: flex;
+  height: 2.55rem;
+  width: 2.55rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--pine);
+  color: #ffffff;
+  transition: transform 0.2s ease;
+}
+
+.pfl-select.is-open .pfl-select__chevron {
+  transform: rotate(180deg);
+}
+
+.pfl-select__menu {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 0.4rem);
+  right: 0;
+  left: 0;
+  margin: 0;
+  list-style: none;
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid #dfe6e3;
+  background: #ffffff;
+  box-shadow: 0 16px 32px -18px rgb(26 46 18 / 0.35);
+  padding: 0.35rem;
+}
+
+.pfl-select__option {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 0.75rem;
+  background: transparent;
+  padding: 0.7rem 0.9rem;
+  text-align: left;
+  font-size: 0.95rem;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.pfl-select__option:hover,
+.pfl-select__option.is-active {
+  background: #f4f6f6;
+  color: var(--pine);
+}
+
+/* Inline maturity stamp (not absolutely positioned over a photo) */
+.guide-maturity-stamp {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+}
+
+/* Footer newsletter input — mirrors PfL `.input.input--white-outline` */
+.footer-input {
+  width: 100%;
+  border-radius: 30px;
+  border: 1px solid #ffffff;
+  background: transparent;
+  color: #ffffff;
+  padding: 0.75rem 3.25rem 0.75rem 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.footer-input::placeholder {
+  color: #ffffff;
+}
+
+.footer-input:focus-visible {
+  outline-color: rgb(255 255 255 / 0.6);
+}
+
+/* Title visible by default; fades out on hover so only the paragraph shows */
+.impact-card-title {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    max-height 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    margin 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 1024px) {
+  .group:hover .impact-card-title {
+    opacity: 0;
+    transform: translateY(-8px);
+    max-height: 0;
+    margin: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+}
+
+/* Body: hidden by default on desktop, fades in slowly on hover */
+.impact-card-body {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 1024px) {
+  .impact-card-body {
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+  }
+
+  .group:hover .impact-card-body {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition-delay: 0.15s;
+  }
+}
+
+.impact-card-body__scroller {
+  max-height: 7.5rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  text-align: center;
+  scrollbar-width: none;
+}
+
+.impact-card-body__scroller::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .impact-card-body__scroller {
+    text-align: left;
+  }
+}
+
+.impact-card-body__arrows {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.impact-read-arrow {
+  display: inline-flex;
+  height: 2.25rem;
+  width: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / 0.55);
+  background: rgb(255 255 255 / 0.14);
+  color: #ffffff;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.impact-read-arrow:hover:not(:disabled) {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: var(--pine);
+}
+
+.impact-read-arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* Pill CTA: arrow-only by default on desktop; label + arrow on hover / mobile */
+.impact-card-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  white-space: nowrap;
+  border-radius: 99px;
+  border: 1px solid #ffffff;
+  background: #ffffff;
+  color: var(--pine);
+  padding: 0.85rem 1rem;
+  font-family: var(--font-stamp), "Arial Black", Impact, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    padding 0.75s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.impact-card-cta__label {
+  display: inline-block;
+}
+
+@media (min-width: 1024px) {
+  .impact-card-cta {
+    padding-left: 0.95rem;
+    padding-right: 0.95rem;
+  }
+
+  .impact-card-cta__label {
+    display: none;
+  }
+
+  .group:hover .impact-card-cta {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+
+  .group:hover .impact-card-cta__label {
+    display: inline-block;
+  }
+}
+
+.impact-card-cta:hover {
+  background: var(--pine);
+  border-color: var(--pine);
+  color: #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .impact-card-body {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-stamp--distress {
+    filter: none;
+    opacity: 0.15;
+  }
+}
+
+/* ── Classic smooth section reveal (scroll) ── */
+.reveal-section {
+  opacity: 0;
+  transform: translate3d(0, 56px, 0);
+  filter: blur(0);
+  transition:
+    opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+  will-change: opacity, transform;
+}
+
+.reveal-section.is-inview {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Floating inset header (always visible, shrinks on scroll) ── */
+.header-spacer {
+  transition: height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Modelled on pastureforlife.org: fixed full-width header, white bar that is
+   full-bleed on small screens and a centered, max-width 1312px "island" with
+   gaps on both sides from xl up. On scroll (>50px) only the vertical padding
+   shrinks and the logo collapses to its icon. */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.site-header__bar {
+  pointer-events: auto;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 0 0 1.25rem 1.25rem;
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.site-header__inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  /* Shorter expanded header (vertical); width stays full-bleed */
+  padding: 0.65rem 1.25rem;
+  transition: padding 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 1024px) {
+  .site-header__inner {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.site-header.is-compact .site-header__inner {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.brand-logos {
+  display: inline-flex;
+  align-items: center;
+}
+
+.brand-mark__logo {
+  transition: height 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.brand-mark__kosova {
+  overflow: hidden;
+  max-width: 12rem;
+  opacity: 1;
+  white-space: nowrap;
+  transform: translateX(0);
+  transition:
+    max-width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    margin 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Scrolled state on desktop: icon-only logo, like PfL's logo → logo-icon swap */
+@media (min-width: 1024px) {
+  .brand-logos.is-compact .brand-mark__kosova {
+    max-width: 0;
+    opacity: 0;
+    margin-left: 0;
+    transform: translateX(-0.5rem);
+    pointer-events: none;
+  }
+
+  .brand-logos.is-compact .brand-mark__logo {
+    height: 2.5rem;
+  }
+}
+
+.site-header .site-nav-link,
+.site-header .header-join-btn {
+  transition:
+    font-size 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    padding 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.header-reveal-btn {
+  display: none;
+}
+
+/* ── Vintage photo frames (SystemSpotlight) ─────────────────────────────
+   Aged cream paper mat with rough edges, thicker bottom like an old print,
+   faded sepia photo with a soft vignette and a small caption. */
+.vintage-photo {
+  --mat: 9px;
+  --mat-bottom: 34px;
+  transform: rotate(var(--float-rot, 0deg));
+  filter: drop-shadow(0 14px 22px rgb(26 46 18 / 0.18))
+    drop-shadow(0 2px 4px rgb(26 46 18 / 0.12));
+}
+
+.vintage-photo__paper {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      120% 90% at 20% 10%,
+      rgb(255 255 255 / 0.55),
+      transparent 55%
+    ),
+    radial-gradient(
+      90% 80% at 85% 95%,
+      rgb(120 96 60 / 0.16),
+      transparent 60%
+    ),
+    #f4ecd8;
+  border-radius: 3px;
+  filter: url(#paper-edge);
+  box-shadow:
+    inset 0 0 0 1px rgb(120 96 60 / 0.18),
+    inset 0 0 22px rgb(120 96 60 / 0.14);
+}
+
+.vintage-photo__print {
+  position: absolute;
+  top: var(--mat);
+  left: var(--mat);
+  right: var(--mat);
+  bottom: var(--mat-bottom);
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow:
+    inset 0 0 0 1px rgb(60 44 20 / 0.25),
+    0 1px 0 rgb(255 255 255 / 0.6);
+  background: #d9cfb8;
+}
+
+.vintage-photo__print img {
+  filter: sepia(0.28) contrast(1.04) saturate(0.9) brightness(1.02);
+}
+
+.vintage-photo__vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 55%,
+      rgb(60 44 20 / 0.28) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgb(255 244 214 / 0.14),
+      transparent 40%
+    );
+  mix-blend-mode: multiply;
+}
+
+.vintage-photo__caption {
+  position: absolute;
+  left: var(--mat);
+  right: var(--mat);
+  bottom: 9px;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-style: italic;
+  font-size: 0.8rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: rgb(78 60 34 / 0.85);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 899px) {
+  .vintage-photo {
+    --mat: 5px;
+    --mat-bottom: 18px;
+  }
+
+  .vintage-photo__caption {
+    font-size: 0.55rem;
+    bottom: 5px;
+  }
+}
+
+/* Landscape Usage Guide print on the home page — same paper mat, in-flow 4:3 */
+.vintage-photo--guide {
+  --mat: 14px;
+  --mat-bottom: 46px;
+}
+
+.vintage-photo--guide .vintage-photo__paper {
+  filter: url(#paper-edge-guide);
+}
+
+.vintage-photo--guide .vintage-photo__print {
+  position: relative;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  margin: var(--mat) var(--mat) 0;
+  aspect-ratio: 4 / 3;
+}
+
+.vintage-photo--guide .vintage-photo__caption {
+  position: relative;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  padding: 0.7rem var(--mat) 0.85rem;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 899px) {
+  .vintage-photo--guide {
+    --mat: 10px;
+    --mat-bottom: 36px;
+  }
+
+  .vintage-photo--guide .vintage-photo__caption {
+    font-size: 0.8rem;
+    padding: 0.55rem var(--mat) 0.7rem;
+  }
+}

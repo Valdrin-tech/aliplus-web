@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" fill="none" aria-hidden="true">
+  <!-- Flat grazing cow  soft brand illustration under the usage grid -->
+  <ellipse cx="168" cy="168" rx="92" ry="6" fill="#1a2e12" opacity="0.08"/>
+  <path fill="#8B5E3C" d="M78 118c-6-28 14-58 48-64 28-5 58 6 74 28 10 14 14 32 10 48-2 10-8 18-18 22H96c-10-2-16-12-18-34Z"/>
+  <path fill="#A67C52" d="M118 88c8-18 28-28 48-24 16 3 28 14 32 28 2 8-2 14-10 16H128c-8-2-12-10-10-20Z"/>
+  <ellipse cx="72" cy="96" rx="28" ry="24" fill="#8B5E3C"/>
+  <ellipse cx="58" cy="100" rx="10" ry="8" fill="#C98B7B"/>
+  <path stroke="#5C3A21" stroke-width="3" stroke-linecap="round" d="M54 78c-6-14-4-26 2-34M86 76c8-16 6-28-2-36"/>
+  <circle cx="62" cy="90" r="3.5" fill="#1a2e12"/>
+  <path fill="#C98B7B" d="M198 138c6 4 18 8 28 4 4 10 2 18-6 22-12 2-24-4-28-14 2-4 4-8 6-12Z"/>
+  <path fill="#6B4423" d="M108 148v22c0 4-2 6-6 6h-4c-4 0-6-2-6-6v-20M148 150v22c0 4-2 6-6 6h-4c-4 0-6-2-6-6v-22M178 148v22c0 4-2 6-6 6h-4c-4 0-6-2-6-6v-20M98 148v20c0 4-2 6-6 6H88c-4 0-6-2-6-6v-18"/>
+  <path fill="#A67C52" d="M236 108c12-2 26 6 28 18 2 10-4 18-14 20-8 2-18-2-24-10-4-8-2-20 10-28Z"/>
+</svg>
