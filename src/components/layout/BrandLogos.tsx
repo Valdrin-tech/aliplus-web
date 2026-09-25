@@ -4,31 +4,39 @@ import Link from "next/link";
 type BrandMarkProps = {
   size?: "sm" | "md" | "lg";
   className?: string;
+  tone?: "color" | "light" | "muted";
 };
 
 const sizeMap = {
   sm: {
-    logo: "h-12 sm:h-14",
-    kosova: "text-[1.65rem] sm:text-[1.9rem]",
-    underline: "h-[3px]",
+    logo: "h-11 sm:h-[3.25rem]",
+    kosova: "text-[1.35rem] sm:text-[1.6rem]",
     gap: "gap-1 sm:gap-1.5",
   },
   md: {
     logo: "h-16 sm:h-20",
     kosova: "text-[2.1rem] sm:text-[2.5rem]",
-    underline: "h-[3.5px]",
     gap: "gap-1.5",
   },
   lg: {
     logo: "h-[4.5rem] sm:h-24",
     kosova: "text-[2.6rem] sm:text-[3.25rem]",
-    underline: "h-1",
     gap: "gap-2",
   },
 } as const;
 
-export function BrandMark({ size = "sm", className = "" }: BrandMarkProps) {
+export function BrandMark({
+  size = "sm",
+  className = "",
+  tone = "color",
+}: BrandMarkProps) {
   const s = sizeMap[size];
+  const kosovaColor =
+    tone === "light"
+      ? "text-white"
+      : tone === "muted"
+        ? "text-[#d3d3d3]"
+        : "text-forest";
 
   return (
     <div
@@ -38,37 +46,39 @@ export function BrandMark({ size = "sm", className = "" }: BrandMarkProps) {
       <Image
         src="/logo-aliplus.png"
         alt="Aliplus"
-        width={280}
-        height={110}
+        width={962}
+        height={582}
         className={`brand-mark__logo ${s.logo} w-auto shrink-0`}
         priority
       />
-      <span className="brand-mark__kosova relative -ml-0.5 flex flex-col leading-none">
-        <span
-          className={`font-display font-semibold tracking-tight text-forest ${s.kosova}`}
-          style={{
-            textShadow: "0 1px 0 color-mix(in srgb, #c11c84 18%, transparent)",
-          }}
-        >
-          Kosova
-        </span>
-        <span
-          aria-hidden
-          className={`mt-1 w-full rounded-full bg-gradient-to-r from-accent via-olive to-lime ${s.underline}`}
-        />
+      <span
+        className={`brand-mark__kosova font-display font-normal tracking-tight ${s.kosova} ${kosovaColor}`}
+        style={
+          tone === "light"
+            ? { textShadow: "0 1px 12px rgb(0 0 0 / 0.35)" }
+            : undefined
+        }
+      >
+        Kosova
       </span>
     </div>
   );
 }
 
-export function BrandLogos({ compact = false }: { compact?: boolean }) {
+export function BrandLogos({
+  compact = false,
+  tone = "color",
+}: {
+  compact?: boolean;
+  tone?: "color" | "light" | "muted";
+}) {
   return (
     <Link
       href="/"
       className={`group brand-logos transition-opacity hover:opacity-95 ${compact ? "is-compact" : ""}`}
-      aria-label="Aliplus Kosova — Accueil"
+      aria-label="Aliplus Kosova — Home"
     >
-      <BrandMark size="sm" />
+      <BrandMark size="sm" tone={tone} />
     </Link>
   );
 }

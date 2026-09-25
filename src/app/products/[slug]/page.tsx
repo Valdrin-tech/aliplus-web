@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { WordReveal } from "@/components/motion/WordReveal";
 import { Button } from "@/components/ui/Button";
 import {
   productDetails,
@@ -30,24 +31,33 @@ export default async function ProductDetailPage({ params }: Props) {
 
   return (
     <>
-      <div className="relative min-h-[420px] bg-dark">
+      <div className="hero-scene relative min-h-[420px] overflow-hidden bg-dark">
         <Image
           src={product.image}
           alt=""
           fill
-          className="object-cover opacity-70"
+          className="hero-scene__media object-cover opacity-70"
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/40 to-transparent" />
-        <div className="relative mx-auto max-w-7xl px-6 pb-16 pt-28 lg:px-10 lg:pt-36">
+        <div className="hero-scene__veil absolute inset-0 bg-gradient-to-t from-dark via-dark/40 to-transparent" />
+        <div className="hero-scene__copy relative mx-auto max-w-7xl px-6 pb-16 pt-28 lg:px-10 lg:pt-36">
           <p className="text-xs uppercase tracking-[0.24em] text-cream/55">
             {product.category}
           </p>
-          <h1 className="mt-4 max-w-2xl font-display text-4xl font-medium text-cream md:text-5xl lg:text-6xl">
-            {product.name}
-          </h1>
-          <p className="mt-6 max-w-xl text-lg text-cream/75">{product.intro}</p>
+          <WordReveal
+            as="h1"
+            className="mt-4 max-w-2xl font-display text-4xl font-medium text-cream md:text-5xl lg:text-6xl"
+            text={product.name}
+            slow
+            delay={0.32}
+          />
+          <WordReveal
+            className="mt-6 max-w-xl text-lg text-cream/75"
+            text={product.intro}
+            slow
+            delay={0.7}
+          />
         </div>
       </div>
 
@@ -59,12 +69,18 @@ export default async function ProductDetailPage({ params }: Props) {
               className="rounded-[1.5rem] border border-dark/8 bg-surface p-8"
             >
               <span className="font-display text-4xl text-soft">{String(i + 1).padStart(2, "0")}</span>
-              <h2 className="mt-4 font-display text-xl font-medium text-dark">
-                {section.title}
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-muted">
-                {section.body}
-              </p>
+              <WordReveal
+                as="h2"
+                className="mt-4 font-display text-xl font-medium text-dark"
+                text={section.title}
+                step={0.04}
+              />
+              <WordReveal
+                className="mt-3 text-sm leading-relaxed text-muted"
+                text={section.body}
+                delay={0.1}
+                step={0.022}
+              />
             </article>
           ))}
         </div>

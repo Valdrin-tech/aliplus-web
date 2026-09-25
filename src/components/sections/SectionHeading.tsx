@@ -1,3 +1,5 @@
+import { WordReveal } from "@/components/motion/WordReveal";
+
 type Props = {
   eyebrow?: string;
   title: string;
@@ -20,19 +22,26 @@ export function SectionHeading({
   return (
     <div className={`max-w-2xl ${alignClass}`}>
       {eyebrow && (
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-accent">
-          {eyebrow}
-        </p>
+        <WordReveal
+          className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-accent"
+          text={eyebrow}
+          step={0.05}
+        />
       )}
-      <h2
+      <WordReveal
+        as="h2"
         className={`font-display text-4xl font-medium leading-[1.08] tracking-tight md:text-5xl lg:text-[3.25rem] ${titleColor}`}
-      >
-        {title}
-      </h2>
+        text={title}
+        delay={0.06}
+        step={0.038}
+      />
       {description && (
-        <p className={`mt-5 text-lg leading-relaxed ${descColor}`}>
-          {description}
-        </p>
+        <WordReveal
+          className={`mt-5 text-lg leading-relaxed ${descColor}`}
+          text={description}
+          delay={0.16}
+          step={0.024}
+        />
       )}
     </div>
   );

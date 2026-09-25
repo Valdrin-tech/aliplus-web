@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 import { PageHero } from "@/components/layout/PageHero";
+import { WordReveal } from "@/components/motion/WordReveal";
 import { conceptPillars, formulaComponents, site } from "@/lib/content";
 import { Button } from "@/components/ui/Button";
 
@@ -32,28 +33,35 @@ export default function ConceptPage() {
 
         <div className="mt-16 grid gap-12 lg:grid-cols-2">
           <div>
-            <h2 className="font-display text-3xl font-medium text-dark">
-              Sensiculture &amp; nutrition vivante
-            </h2>
-            <p className="mt-4 leading-relaxed text-muted">
-              Aliplus place les cycles vertueux entre animaux, sols et plantes au
-              centre de la pratique d’élevage. Production locale, circuits courts
-              et goût authentique — pour des filières laitières et viande
-              responsables.
-            </p>
-            <p className="mt-4 leading-relaxed text-muted">
-              Depuis 2019, l’écosystème s’étend vers la vente directe — restaurant
-              néo-paysan et boutiques de ferme — toujours au service des
-              producteurs français.
-            </p>
+            <WordReveal
+              as="h2"
+              className="font-display text-3xl font-medium text-dark"
+              text="Sensiculture & nutrition vivante"
+              step={0.038}
+            />
+            <WordReveal
+              className="mt-4 leading-relaxed text-muted"
+              text="Aliplus place les cycles vertueux entre animaux, sols et plantes au centre de la pratique d’élevage. Production locale, circuits courts et goût authentique — pour des filières laitières et viande responsables."
+              delay={0.1}
+              step={0.022}
+            />
+            <WordReveal
+              className="mt-4 leading-relaxed text-muted"
+              text="Depuis 2019, l’écosystème s’étend vers la vente directe — restaurant néo-paysan et boutiques de ferme — toujours au service des producteurs français."
+              delay={0.16}
+              step={0.022}
+            />
           </div>
           <div className="rounded-[1.5rem] bg-dark p-8 text-cream lg:p-10">
             <p className="text-xs uppercase tracking-[0.22em] text-cream/50">
               Présentation
             </p>
-            <p className="mt-4 font-display text-2xl">
-              Par Samuel Michaud — éleveur &amp; créateur d’Aliplus
-            </p>
+            <WordReveal
+              className="mt-4 font-display text-2xl"
+              text="Par Samuel Michaud — éleveur & créateur d’Aliplus"
+              delay={0.08}
+              step={0.032}
+            />
             <p className="mt-4 text-sm text-cream/70">
               Audio et vidéos de terrain disponibles sur demande lors d’une visite
               à la ferme pilote ({site.address.city}).
@@ -65,16 +73,24 @@ export default function ConceptPage() {
         </div>
 
         <div className="mt-20">
-          <h2 className="font-display text-3xl font-medium text-dark">
-            Principes de fonctionnement
-          </h2>
+          <WordReveal
+            as="h2"
+            className="font-display text-3xl font-medium text-dark"
+            text="Principes de fonctionnement"
+            step={0.038}
+          />
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {conceptPillars.map((pillar) => (
               <article
                 key={pillar.title}
                 className="rounded-[1.5rem] border border-dark/8 bg-surface p-8"
               >
-                <h3 className="font-display text-xl font-medium">{pillar.title}</h3>
+                <WordReveal
+                  as="h3"
+                  className="font-display text-xl font-medium"
+                  text={pillar.title}
+                  step={0.04}
+                />
                 <ul className="mt-4 space-y-2 text-sm text-muted">
                   {pillar.points.map((pt) => (
                     <li key={pt} className="flex gap-2">
@@ -89,14 +105,18 @@ export default function ConceptPage() {
         </div>
 
         <div className="mt-20 rounded-[2rem] border border-dark/8 bg-soft/50 p-10 lg:p-14">
-          <h2 className="font-display text-3xl font-medium text-dark">
-            La formule en 14 composants
-          </h2>
-          <p className="mt-4 max-w-2xl text-muted">
-            Aliplus hydrolyse partiellement l’amidon et la cellulose, stabilise la
-            céréale aliplusée et augmente la valeur nutritionnelle (acides
-            aminés, protéine, PDI).
-          </p>
+          <WordReveal
+            as="h2"
+            className="font-display text-3xl font-medium text-dark"
+            text="La formule en 14 composants"
+            step={0.038}
+          />
+          <WordReveal
+            className="mt-4 max-w-2xl text-muted"
+            text="Aliplus hydrolyse partiellement l’amidon et la cellulose, stabilise la céréale aliplusée et augmente la valeur nutritionnelle (acides aminés, protéine, PDI)."
+            delay={0.12}
+            step={0.022}
+          />
           <ul className="mt-8 flex flex-wrap gap-3">
             {formulaComponents.map((c) => (
               <li

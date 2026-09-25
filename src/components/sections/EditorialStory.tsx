@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { WordReveal } from "@/components/motion/WordReveal";
 
 type Block =
   | { type: "statement"; text: string }
@@ -32,18 +33,37 @@ export type EditorialStoryProps = {
 function Content({ column }: { column: TextColumn }) {
   return (
     <div>
-      {column.eyebrow && <p className="pfl-subheading">{column.eyebrow}</p>}
-      {column.title && <h2 className="pfl-h2 text-dark">{column.title}</h2>}
+      {column.eyebrow && (
+        <WordReveal className="pfl-subheading" text={column.eyebrow} step={0.05} />
+      )}
+      {column.title && (
+        <WordReveal
+          as="h2"
+          className="pfl-h2 text-dark"
+          text={column.title}
+          delay={0.06}
+          step={0.038}
+        />
+      )}
       <div className="pfl-content">
         {column.blocks.map((b, i) =>
           b.type === "statement" ? (
-            <h5 key={i} className="pfl-h5">
-              {b.text}
-            </h5>
+            <WordReveal
+              key={i}
+              as="h5"
+              className="pfl-h5"
+              text={b.text}
+              delay={0.08 + i * 0.04}
+              step={0.028}
+            />
           ) : (
-            <p key={i} className="pfl-lead">
-              {b.text}
-            </p>
+            <WordReveal
+              key={i}
+              className="pfl-lead"
+              text={b.text}
+              delay={0.12 + i * 0.04}
+              step={0.022}
+            />
           ),
         )}
       </div>

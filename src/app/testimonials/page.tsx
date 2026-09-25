@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/layout/PageHero";
+import { WordReveal } from "@/components/motion/WordReveal";
 import { testimonials } from "@/lib/content";
 import { Button } from "@/components/ui/Button";
 
@@ -22,9 +23,11 @@ export default function TestimonialsPage() {
               key={t.author}
               className="card-surface rounded-[1.75rem] p-10"
             >
-              <p className="font-display text-2xl leading-snug text-dark">
-                “{t.quote}”
-              </p>
+              <WordReveal
+                className="font-display text-2xl leading-snug text-dark"
+                text={`“${t.quote}”`}
+                step={0.028}
+              />
               <footer className="mt-8 text-sm">
                 <span className="font-medium">{t.author}</span>
                 <span className="text-muted"> · {t.role}</span>

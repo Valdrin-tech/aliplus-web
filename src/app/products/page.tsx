@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/layout/PageHero";
+import { WordReveal } from "@/components/motion/WordReveal";
 import { productLines } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -27,10 +28,18 @@ export default function ProductsPage() {
                   <p className="text-xs uppercase tracking-[0.22em] text-olive">
                     {p.category}
                   </p>
-                  <h2 className="mt-2 font-display text-4xl font-medium text-dark">
-                    {p.name}
-                  </h2>
-                  <p className="mt-4 max-w-xl text-muted">{p.excerpt}</p>
+                  <WordReveal
+                    as="h2"
+                    className="mt-2 font-display text-4xl font-medium text-dark"
+                    text={p.name}
+                    step={0.038}
+                  />
+                  <WordReveal
+                    className="mt-4 max-w-xl text-muted"
+                    text={p.excerpt}
+                    delay={0.1}
+                    step={0.024}
+                  />
                 </div>
                 <span className="text-sm font-medium text-accent group-hover:underline">
                   Fiche produit →

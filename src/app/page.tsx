@@ -1,15 +1,17 @@
 import { Hero } from "@/components/home/Hero";
-import { FeatureSpotlight } from "@/components/home/FeatureSpotlight";
 import { ImpactCards } from "@/components/home/ImpactCards";
+import { HomeImageBreak } from "@/components/home/HomeImageBreak";
 import { SystemSpotlight } from "@/components/home/SystemSpotlight";
+import { HomeClosing } from "@/components/home/HomeClosing";
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <FeatureSpotlight />
       <ImpactCards />
+      <HomeImageBreak />
       <SystemSpotlight />
+      <HomeClosing />
     </>
   );
 }

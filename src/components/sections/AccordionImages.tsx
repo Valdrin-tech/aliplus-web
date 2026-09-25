@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { WordReveal } from "@/components/motion/WordReveal";
 
 export type AccordionItem = {
   title: string;
@@ -73,8 +74,18 @@ export function AccordionImages({ eyebrow, title, items }: Props) {
     <section className="accordion-images relative container-pfl my-16 lg:my-24">
       {(eyebrow || title) && (
         <div className="mb-10 md:mb-14">
-          {eyebrow && <p className="pfl-subheading">{eyebrow}</p>}
-          {title && <h2 className="pfl-h2 text-dark">{title}</h2>}
+          {eyebrow && (
+            <WordReveal className="pfl-subheading" text={eyebrow} step={0.05} />
+          )}
+          {title && (
+            <WordReveal
+              as="h2"
+              className="pfl-h2 text-dark"
+              text={title}
+              delay={0.06}
+              step={0.038}
+            />
+          )}
         </div>
       )}
 
