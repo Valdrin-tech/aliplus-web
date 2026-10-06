@@ -2,7 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import { WordReveal } from "@/components/motion/WordReveal";
+
+type LenisLike = {
+  on?: (event: string, handler: () => void) => unknown;
+  off?: (event: string, handler: () => void) => unknown;
+};
 
 const heroTitle =
   "We're here to get more from every ration — and from cereals already on the farm.";
@@ -18,7 +24,12 @@ const chapters = [
     flip: false,
     image: "/aliplus-field.jpg",
     imageAlt: "Wheat field at last light",
-    body: "Aliplus is a farm-ready blend of urea, plant extracts, oligoelements and clay. Mixed on the farm with wheat, barley, maize and other cereals you already grow, then matured, then fed.",
+    kicker: "Kosova Aliplus",
+    role: "Manufacturer of feed for cattle, goats, and sheep",
+    bodies: [
+      "Kosova Aliplus is the creator of a natural, cost-effective nutritional concept developed by a livestock farmer working alongside biologists. It features a unique formula of 14 natural ingredients that optimizes ruminant metabolism. With Aliplus, farmers gain autonomy over their animals' nutrition. Manufactured in France and used on thousands of farms, Aliplus boosts both farm profitability and animal health and well-being.",
+      "For years, Kosova Aliplus has been innovating in animal nutrition with supplements for cattle and sheep — including products for cows, calves, bulls, and young bulls. Developed in France, Aliplus stands out for its unique formulation, which is ideal for optimizing health and production while remaining environmentally friendly.",
+    ],
   },
   {
     n: "02",
@@ -27,7 +38,11 @@ const chapters = [
     flip: true,
     image: "/home-barn.jpg",
     imageAlt: "Cattle in an open barn",
-    body: "Prebiotic and probiotic support helps rumen flora work more evenly. Protein and energy values can rise after 14 days — steadier uptake, less acidosis risk, and more from the same bite.",
+    bodies: [
+      "Aliplus is rethinking animal nutrition by offering an economical, eco-friendly solution that adds value to local grains. This approach enables the on-farm production of high-quality feed at a lower cost, thereby fostering protein self-sufficiency.",
+      "Aliplus’s unique 14-ingredient formula cuts feed costs, lowers operating expenses, improves animal health, and boosts production — all of which helps increase farm profitability.",
+      "Aliplus is mixed with grains available on the farm; it enhances their nutritional value (amino acids, protein, PDI) and partially hydrolyzes the starch and cellulose. The resulting Aliplus-treated grain is stable, easy to store, and durable.",
+    ],
   },
   {
     n: "03",
@@ -67,8 +82,65 @@ const chapters = [
 ];
 
 export function AliplusApproach() {
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const hero = root.querySelector<HTMLElement>(".approach-hero");
+    const heroImg = root.querySelector<HTMLElement>(".approach-hero__img");
+    const chapterEls = Array.from(root.querySelectorAll<HTMLElement>(".approach-chapter"));
+
+    const apply = () => {
+      const vh = window.innerHeight || 1;
+
+      if (hero && heroImg) {
+        const rect = hero.getBoundingClientRect();
+        const progress = Math.min(1, Math.max(0, -rect.top / Math.max(rect.height, 1)));
+        heroImg.style.transform = `translate3d(0, ${progress * 12}%, 0) scale(${1.12 - progress * 0.08})`;
+      }
+
+      chapterEls.forEach((chapter) => {
+        const rect = chapter.getBoundingClientRect();
+        const progress = Math.min(1, Math.max(0, (vh - rect.top) / (rect.height + vh)));
+        const img = chapter.querySelector<HTMLElement>(".approach-chapter__img");
+        const copy = chapter.querySelector<HTMLElement>(".approach-chapter__copy");
+        const stack = chapter.querySelector<HTMLElement>(".approach-chapter__stack");
+
+        if (img) {
+          img.style.transform = `translate3d(0, ${8 - progress * 16}%, 0) scale(${1.18 - progress * 0.14})`;
+        }
+        if (copy) {
+          copy.style.transform = `translate3d(0, ${40 - progress * 58}px, 0)`;
+        }
+        if (stack) {
+          stack.style.transform = `translate3d(0, ${32 - progress * 48}px, 0)`;
+        }
+        chapter.querySelectorAll<HTMLElement>(".approach-chapter__circle-img").forEach((circleImg) => {
+          circleImg.style.transform = `translate3d(0, ${6 - progress * 12}%, 0) scale(${1.16 - progress * 0.12})`;
+        });
+      });
+    };
+
+    apply();
+    const lenis = (window as Window & { __lenis?: LenisLike }).__lenis;
+    lenis?.on?.("scroll", apply);
+    window.addEventListener("scroll", apply, { passive: true });
+    window.addEventListener("resize", apply);
+    const later = window.setTimeout(apply, 400);
+
+    return () => {
+      window.clearTimeout(later);
+      lenis?.off?.("scroll", apply);
+      window.removeEventListener("scroll", apply);
+      window.removeEventListener("resize", apply);
+    };
+  }, []);
+
   return (
-    <div className="aliplus-approach">
+    <div className="aliplus-approach" ref={rootRef}>
       <section className="approach-hero hero-scene">
         <div className="approach-hero__media">
           <Image
@@ -116,19 +188,14 @@ export function AliplusApproach() {
               className={`approach-chapter approach-chapter--${chapter.tone} approach-chapter--circles`}
             >
               <div className="approach-chapter__head">
-                <WordReveal
-                  as="h2"
-                  className="approach-chapter__num"
-                  text={chapter.n}
-                  step={0.08}
-                />
                 <div className="approach-chapter__title-wrap">
                   <WordReveal
-                    as="h3"
+                    as="h2"
                     className="approach-chapter__title"
                     text={chapter.title}
                     delay={0.08}
                   />
+                  <span className="approach-chapter__rule" aria-hidden />
                 </div>
               </div>
               <div className="approach-chapter__stack">
@@ -139,7 +206,7 @@ export function AliplusApproach() {
                         src={photo.src}
                         alt={photo.alt}
                         fill
-                        className="object-cover"
+                        className="object-cover approach-chapter__circle-img"
                         sizes="22.7em"
                       />
                     </div>
@@ -179,23 +246,44 @@ export function AliplusApproach() {
               <div className="approach-chapter__heading">
                 <WordReveal
                   as="h2"
-                  className="approach-chapter__num"
-                  text={chapter.n}
-                  step={0.08}
-                />
-                <WordReveal
-                  as="h3"
                   className="approach-chapter__title"
                   text={chapter.title}
                   delay={0.08}
                 />
+                <span className="approach-chapter__rule" aria-hidden />
               </div>
-              <WordReveal
-                className="approach-chapter__body"
-                text={chapter.body}
-                delay={0.16}
-                step={0.022}
-              />
+              <div className="approach-chapter__text">
+                {"kicker" in chapter && chapter.kicker ? (
+                  <WordReveal
+                    className="approach-chapter__kicker"
+                    text={chapter.kicker}
+                    delay={0.12}
+                    step={0.04}
+                  />
+                ) : null}
+                {"role" in chapter && chapter.role ? (
+                  <WordReveal
+                    className="approach-chapter__role"
+                    text={chapter.role}
+                    delay={0.16}
+                    step={0.028}
+                  />
+                ) : null}
+                {("bodies" in chapter && chapter.bodies
+                  ? chapter.bodies
+                  : "body" in chapter && chapter.body
+                    ? [chapter.body]
+                    : []
+                ).map((para, i) => (
+                  <WordReveal
+                    key={para.slice(0, 32)}
+                    className="approach-chapter__body"
+                    text={para}
+                    delay={0.2 + i * 0.1}
+                    step={0.014}
+                  />
+                ))}
+              </div>
             </div>
           </section>
         );

@@ -55,10 +55,10 @@ const SCENE_SELECTOR = [
   "main .product-stamp",
 ].join(",");
 
-const SKIP_CLOSEST = "header, footer, .site-footer, nav, .footer-hero__pin";
+const SKIP_CLOSEST = "header, footer, .site-footer, nav, .footer-hero__pin, .co-page, .cine-page";
 
 const OWN_MOTION =
-  ".approach-chapter__circle, .ghost-fill-btn, .ghost-line-btn, .cine-hero__cta, .hero-pill, .pfl-btn, .cine-hero__rule, .approach-hero__rule, .how-step__bar, .home-cta__shot, .word-reveal";
+  ".approach-chapter__circle, .approach-chapter__photo, .approach-chapter__img, .approach-chapter__copy, .approach-chapter__stack, .ghost-fill-btn, .ghost-line-btn, .cine-hero__cta, .hero-pill, .pfl-btn, .cine-hero__rule, .approach-hero__rule, .how-step__bar, .home-cta__shot, .word-reveal";
 
 function kindOf(el: HTMLElement) {
   if (el.classList.contains("word-reveal")) return "soft";

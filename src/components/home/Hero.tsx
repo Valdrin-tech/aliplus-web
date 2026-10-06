@@ -5,9 +5,9 @@ export function Hero() {
     <CinematicHero
       image="/hero-aliplus-bag.png"
       imageAlt="Aliplus feed bag standing in a pasture at sunset"
-      imagePosition="72% 58%"
+      imagePosition="80% 62%"
       unoptimized
-      eyebrow="Product · Aliplus"
+      crumbs={["Products", "Aliplus"]}
       title={"Aliplus\nFeed Additive"}
       tagline="More from every ration."
       body="Feed is your biggest cost — it does not have to be your biggest waste. Mix Aliplus with cereals you already grow to raise protein and energy, support the rumen, and turn every bite into measurable performance."

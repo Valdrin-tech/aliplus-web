@@ -15,6 +15,8 @@ const OVER_HERO = new Set([
   "/contact",
 ]);
 
+const LIGHT_OVERLAY = new Set<string>();
+
 const menuItems = [
   { label: "Home", href: "/" },
   { label: "Aliplus", href: "/products/aliplus" },
@@ -38,13 +40,18 @@ export function Header() {
   const [compact, setCompact] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(88);
 
+  const [onLight, setOnLight] = useState(LIGHT_OVERLAY.has(pathname));
   const overlay = overHero || menuOpen;
-  const tone =
-    menuOpen || (overlay && !compact)
-      ? "light"
-      : overlay && compact
-        ? "muted"
-        : "color";
+  const lightBar = overlay && onLight && !menuOpen;
+  const tone = menuOpen
+    ? "light"
+    : lightBar
+      ? "color"
+      : overlay && !compact
+        ? "light"
+        : overlay && compact
+          ? "muted"
+          : "color";
 
   useEffect(() => {
     setMenuOpen(false);
@@ -78,6 +85,13 @@ export function Header() {
         const next = y > 40;
         return prev === next ? prev : next;
       });
+      if (LIGHT_OVERLAY.has(pathname)) {
+        const intro = document.querySelector(".co-hero__copy");
+        const bottom = intro?.getBoundingClientRect().bottom ?? 0;
+        setOnLight(bottom > 96);
+      } else {
+        setOnLight(false);
+      }
       ticking = false;
     };
     const onScroll = () => {
@@ -87,8 +101,13 @@ export function Header() {
     };
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    const lenis = (window as Window & { __lenis?: { on?: (e: string, fn: () => void) => () => void } }).__lenis;
+    const offLenis = lenis?.on?.("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      offLenis?.();
+    };
+  }, [pathname]);
 
   useEffect(() => {
     document.body.classList.toggle("menu-open", menuOpen);
@@ -117,6 +136,7 @@ export function Header() {
         className={[
           "site-header",
           overlay ? "is-overlay" : "",
+          lightBar ? "is-on-light" : "",
           compact && !menuOpen ? "is-compact" : "",
           menuOpen ? "is-menu-open" : "",
         ]

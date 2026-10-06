@@ -8,7 +8,7 @@ type Props = {
   imagePosition?: string;
   imageQuality?: number;
   unoptimized?: boolean;
-  eyebrow: string;
+  crumbs: [string, string];
   title: string;
   tagline: string;
   body: string;
@@ -19,10 +19,10 @@ type Props = {
 export function CinematicHero({
   image,
   imageAlt,
-  imagePosition = "center",
+  imagePosition = "100% 0%",
   imageQuality = 95,
   unoptimized = false,
-  eyebrow,
+  crumbs,
   title,
   tagline,
   body,
@@ -30,7 +30,7 @@ export function CinematicHero({
   note,
 }: Props) {
   return (
-    <section className="cine-hero hero-scene relative">
+    <section className="home-hero hero-scene">
       <Image
         src={image}
         alt={imageAlt}
@@ -39,53 +39,56 @@ export function CinematicHero({
         loading="eager"
         quality={imageQuality}
         unoptimized={unoptimized}
-        className="cine-hero__photo hero-scene__media"
+        className="home-hero__img hero-scene__media"
         style={{ objectPosition: imagePosition }}
         sizes="100vw"
       />
-      <div className="cine-hero__veil hero-scene__veil" aria-hidden />
+      <div className="home-hero__veil hero-scene__veil" aria-hidden />
 
-      <div className="cine-hero__inner">
-        <div className="cine-hero__copy hero-scene__copy">
-          <div className="cine-hero__top">
-            <WordReveal className="cine-hero__eyebrow" text={eyebrow} slow delay={0.2} />
-            <WordReveal
-              as="h1"
-              className="cine-hero__title"
-              text={title}
-              slow
-              delay={0.32}
-            />
-            <div className="cine-hero__rule" aria-hidden />
+      <div className="home-hero__content hero-scene__copy">
+        <div className="home-hero__heading">
+          <div className="home-hero__crumbs">
+            <WordReveal as="span" className="home-hero__crumb" text={crumbs[0]} slow delay={0.18} />
+            <span className="home-hero__dot" aria-hidden />
+            <WordReveal as="span" className="home-hero__crumb" text={crumbs[1]} slow delay={0.22} />
           </div>
+          <WordReveal
+            as="h1"
+            className="home-hero__title"
+            text={title}
+            slow
+            delay={0.32}
+          />
+        </div>
 
-          <div className="cine-hero__lower">
+        <div className="home-hero__description">
+          <div className="home-hero__lead">
             <WordReveal
               as="h2"
-              className="cine-hero__tagline"
+              className="home-hero__tagline"
               text={tagline}
               slow
               delay={0.55}
             />
             <WordReveal
-              className="cine-hero__body"
+              className="home-hero__body"
               text={body}
               slow
-              delay={0.75}
+              delay={0.72}
             />
-            <Link href={cta.href} className="cine-hero__cta">
-              <span aria-hidden>·</span>
+          </div>
+          <div className="home-hero__actions">
+            <Link href={cta.href} className="ghost-fill-btn ghost-fill-btn--light">
               {cta.label}
-              <span aria-hidden>·</span>
             </Link>
-            {note && (
+            {note ? (
               <WordReveal
-                className="cine-hero__note"
+                className="home-hero__note"
                 text={note}
                 slow
                 delay={1.05}
               />
-            )}
+            ) : null}
           </div>
         </div>
       </div>
