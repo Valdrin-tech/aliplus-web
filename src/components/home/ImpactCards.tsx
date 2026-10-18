@@ -1,24 +1,11 @@
+"use client";
+
 import { WordReveal } from "@/components/motion/WordReveal";
+import { useT } from "@/i18n/LocaleProvider";
 
-const pillars = [
-  {
-    title: "Smarter nutrition",
-    body: "Fourteen natural components in one formula. Mixed at 22 kg per ton, Aliplus raises protein and energy more evenly than bought-in concentrates.",
-    icon: "spark",
-  },
-  {
-    title: "Higher nutrient use",
-    body: "Prebiotic and probiotic support for the rumen — steadier uptake, energetic rations, and less acidosis risk.",
-    icon: "flow",
-  },
-  {
-    title: "Proven performance",
-    body: "Healthier animals, stronger conversion and better margins from grain already grown on the farm.",
-    icon: "up",
-  },
-] as const;
+const icons = ["spark", "flow", "up"] as const;
 
-function PillarIcon({ name }: { name: (typeof pillars)[number]["icon"] }) {
+function PillarIcon({ name }: { name: (typeof icons)[number] }) {
   if (name === "spark") {
     return (
       <svg
@@ -72,6 +59,8 @@ function PillarIcon({ name }: { name: (typeof pillars)[number]["icon"] }) {
 }
 
 export function ImpactCards() {
+  const t = useT();
+  const pillars = t.home.difference.pillars.map((p, i) => ({ ...p, icon: icons[i] ?? "up" }));
   return (
     <section className="diff-section">
       <div className="diff-section__inner">
@@ -79,12 +68,12 @@ export function ImpactCards() {
           <WordReveal
             as="h2"
             className="diff-section__title"
-            text={"The Aliplus\nDifference"}
+            text={t.home.difference.title}
             step={0.038}
           />
           <WordReveal
             className="diff-section__lead"
-            text="Fourteen farm-ready components in one formula, mixed with cereals you already grow. Aliplus is ready for producers who want more from every ration."
+            text={t.home.difference.lead}
             delay={0.12}
             step={0.024}
           />

@@ -1,16 +1,11 @@
 "use client";
 
-import { FormEvent, useEffect, useId, useRef, useState } from "react";
+import { FormEvent, useEffect, useId, useRef, useState, type ReactNode } from "react";
+import { useT } from "@/i18n/LocaleProvider";
 
-const topics = [
-  { value: "general", label: "General Enquiry" },
-  { value: "ration", label: "Ration advice" },
-  { value: "product", label: "Aliplus product" },
-  { value: "visit", label: "Farm visit" },
-  { value: "usage", label: "Usage & transition" },
-] as const;
+const topicValues = ["general", "ration", "product", "visit", "usage"] as const;
 
-type TopicValue = (typeof topics)[number]["value"];
+type TopicValue = (typeof topicValues)[number];
 
 type Fields = {
   contact: TopicValue;
@@ -46,6 +41,43 @@ function Chevron() {
   );
 }
 
+function Field({
+  label,
+  required: isRequired,
+  error,
+  filled,
+  area,
+  labelFor = true,
+  children,
+}: {
+  label: string;
+  required?: boolean;
+  error?: string;
+  filled: boolean;
+  area?: boolean;
+  labelFor?: boolean;
+  children: (id: string) => ReactNode;
+}) {
+  const id = useId();
+  const LabelTag = labelFor ? "label" : "span";
+  return (
+    <div
+      className={`sheet-field ${filled ? "is-filled" : ""} ${error ? "is-error" : ""} ${area ? "sheet-field--area" : ""}`}
+    >
+      <LabelTag className="sheet-label" {...(labelFor ? { htmlFor: id } : {})}>
+        {label}
+        {isRequired ? (
+          <span className="sheet-label__mark" aria-hidden>
+            *
+          </span>
+        ) : null}
+      </LabelTag>
+      {children(id)}
+      {error ? <p className="sheet-error">{error}</p> : null}
+    </div>
+  );
+}
+
 function ContactSelect({
   value,
   onChange,
@@ -55,10 +87,11 @@ function ContactSelect({
   onChange: (value: TopicValue) => void;
   invalid?: boolean;
 }) {
+  const t = useT().contact.form;
+  const topics = topicValues.map((v) => ({ value: v, label: t.topics[v] ?? v }));
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
-  const listId = useId();
-  const selected = topics.find((t) => t.value === value) ?? topics[0];
+  const selected = topics.find((o) => o.value === value) ?? topics[0];
 
   useEffect(() => {
     if (!open) return;
@@ -77,52 +110,54 @@ function ContactSelect({
   }, [open]);
 
   return (
-    <div className="relative mb-4" ref={wrapRef}>
-      <span className={`contact-label ${invalid ? "is-error" : ""}`}>
-        Contact*
-      </span>
-      <button
-        type="button"
-        className={`pfl-select ${invalid ? "is-error" : ""} ${open ? "is-open" : ""}`}
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        aria-controls={listId}
-        onClick={() => setOpen((v) => !v)}
-      >
-        <span>{selected.label}</span>
-        <span className="pfl-select__chevron">
-          <Chevron />
-        </span>
-      </button>
-      {open && (
-        <ul className="pfl-select__menu" role="listbox" id={listId}>
-          {topics.map((t) => (
-            <li key={t.value} role="presentation">
-              <button
-                type="button"
-                role="option"
-                aria-selected={t.value === value}
-                className={`pfl-select__option ${t.value === value ? "is-active" : ""}`}
-                onClick={() => {
-                  onChange(t.value);
-                  setOpen(false);
-                }}
-              >
-                {t.label}
-              </button>
-            </li>
-          ))}
-        </ul>
+    <Field label={t.topic} required filled labelFor={false} error={invalid ? t.topicError : undefined}>
+      {(id) => (
+        <div className="sheet-field__control" ref={wrapRef}>
+          <button
+            id={id}
+            type="button"
+            className={`sheet-select ${invalid ? "is-error" : ""} ${open ? "is-open" : ""}`}
+            aria-label={`${t.topic}, ${selected.label}`}
+            aria-haspopup="listbox"
+            aria-expanded={open}
+            aria-invalid={invalid ? true : undefined}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span>{selected.label}</span>
+            <span className="sheet-select__orb">
+              <Chevron />
+            </span>
+          </button>
+          {open && (
+            <ul className="sheet-select__menu" role="listbox">
+              {topics.map((o) => (
+                <li key={o.value} role="presentation">
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={o.value === value}
+                    className={`sheet-select__option ${o.value === value ? "is-active" : ""}`}
+                    onClick={() => {
+                      onChange(o.value);
+                      setOpen(false);
+                    }}
+                  >
+                    {o.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       )}
-    </div>
+    </Field>
   );
 }
 
 export function ContactForm() {
+  const t = useT().contact.form;
   const [fields, setFields] = useState<Fields>(empty);
-  const [errors, setErrors] = useState<Partial<Record<keyof Fields, string>>>(
-    {},
-  );
+  const [errors, setErrors] = useState<Partial<Record<keyof Fields, string>>>({});
   const [sent, setSent] = useState(false);
 
   function set<K extends keyof Fields>(key: K, value: Fields[K]) {
@@ -139,10 +174,10 @@ export function ContactForm() {
     e.preventDefault();
     const next: Partial<Record<keyof Fields, string>> = {};
     for (const key of required) {
-      if (!fields[key].trim()) next[key] = "This field is required";
+      if (!fields[key].trim()) next[key] = t.required;
     }
     if (fields.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email)) {
-      next.email = "Enter a valid email";
+      next.email = t.invalidEmail;
     }
     setErrors(next);
     if (Object.keys(next).length) return;
@@ -151,15 +186,16 @@ export function ContactForm() {
 
   if (sent) {
     return (
-      <p className="rounded-md bg-white p-8 text-center text-base text-text">
-        Thank you for contacting us, your message has been sent.
-      </p>
+      <div className="sheet-form sheet-form--sent">
+        <p className="sheet-form__title">{t.sentTitle}</p>
+        <p className="sheet-form__note">{t.sentNote}</p>
+      </div>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} className="rounded-md bg-white p-8" noValidate>
-      <h3 className="contact-form-title">Get in touch</h3>
+    <form onSubmit={onSubmit} className="sheet-form" noValidate>
+      <h2 className="sheet-form__title">{t.title}</h2>
 
       <ContactSelect
         value={fields.contact}
@@ -167,73 +203,78 @@ export function ContactForm() {
         invalid={Boolean(errors.contact)}
       />
 
-      <label className="relative mb-4 block">
-        <span className={`contact-label ${errors.name ? "is-error" : ""}`}>
-          Name*
-        </span>
-        {errors.name && <p className="contact-error">{errors.name}</p>}
-        <input
-          className={`pfl-input ${errors.name ? "is-error" : ""}`}
-          placeholder="Your name"
-          autoComplete="name"
-          value={fields.name}
-          onChange={(e) => set("name", e.target.value)}
-        />
-      </label>
+      <Field label={t.name} required filled={Boolean(fields.name)} error={errors.name}>
+        {(id) => (
+          <input
+            id={id}
+            className={`sheet-input ${errors.name ? "is-error" : ""}`}
+            autoComplete="name"
+            aria-invalid={errors.name ? true : undefined}
+            value={fields.name}
+            onChange={(e) => set("name", e.target.value)}
+          />
+        )}
+      </Field>
 
-      <label className="relative mb-4 block">
-        <span className={`contact-label ${errors.email ? "is-error" : ""}`}>
-          Email*
-        </span>
-        {errors.email && <p className="contact-error">{errors.email}</p>}
-        <input
-          className={`pfl-input ${errors.email ? "is-error" : ""}`}
-          placeholder="Your email"
-          autoComplete="email"
-          value={fields.email}
-          onChange={(e) => set("email", e.target.value)}
-        />
-      </label>
+      <Field label={t.email} required filled={Boolean(fields.email)} error={errors.email}>
+        {(id) => (
+          <input
+            id={id}
+            className={`sheet-input ${errors.email ? "is-error" : ""}`}
+            autoComplete="email"
+            inputMode="email"
+            aria-invalid={errors.email ? true : undefined}
+            value={fields.email}
+            onChange={(e) => set("email", e.target.value)}
+          />
+        )}
+      </Field>
 
-      <label className="relative mb-4 block">
-        <span className="contact-label">Phone</span>
-        <input
-          className="pfl-input"
-          placeholder="Your phone"
-          autoComplete="tel"
-          value={fields.telephone}
-          onChange={(e) => set("telephone", e.target.value)}
-        />
-      </label>
+      <Field label={t.phone} filled={Boolean(fields.telephone)}>
+        {(id) => (
+          <input
+            id={id}
+            className="sheet-input"
+            autoComplete="tel"
+            inputMode="tel"
+            value={fields.telephone}
+            onChange={(e) => set("telephone", e.target.value)}
+          />
+        )}
+      </Field>
 
-      <label className="relative mb-4 block">
-        <span className={`contact-label ${errors.subject ? "is-error" : ""}`}>
-          Subject*
-        </span>
-        {errors.subject && <p className="contact-error">{errors.subject}</p>}
-        <input
-          className={`pfl-input ${errors.subject ? "is-error" : ""}`}
-          placeholder="Subject"
-          value={fields.subject}
-          onChange={(e) => set("subject", e.target.value)}
-        />
-      </label>
+      <Field label={t.subject} required filled={Boolean(fields.subject)} error={errors.subject}>
+        {(id) => (
+          <input
+            id={id}
+            className={`sheet-input ${errors.subject ? "is-error" : ""}`}
+            aria-invalid={errors.subject ? true : undefined}
+            value={fields.subject}
+            onChange={(e) => set("subject", e.target.value)}
+          />
+        )}
+      </Field>
 
-      <label className="relative mb-4 block">
-        <span className={`contact-label ${errors.message ? "is-error" : ""}`}>
-          Message*
-        </span>
-        {errors.message && <p className="contact-error">{errors.message}</p>}
-        <textarea
-          className={`pfl-input pfl-input--area ${errors.message ? "is-error" : ""}`}
-          placeholder="Your message"
-          value={fields.message}
-          onChange={(e) => set("message", e.target.value)}
-        />
-      </label>
+      <Field
+        label={t.message}
+        required
+        area
+        filled={Boolean(fields.message)}
+        error={errors.message}
+      >
+        {(id) => (
+          <textarea
+            id={id}
+            className={`sheet-input sheet-input--area ${errors.message ? "is-error" : ""}`}
+            aria-invalid={errors.message ? true : undefined}
+            value={fields.message}
+            onChange={(e) => set("message", e.target.value)}
+          />
+        )}
+      </Field>
 
-      <button className="pfl-btn pfl-btn--green mt-2" type="submit">
-        Submit
+      <button className="ghost-line-btn" type="submit">
+        {t.submit}
       </button>
     </form>
   );

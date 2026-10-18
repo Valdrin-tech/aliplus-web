@@ -11,6 +11,8 @@ export const site = {
     country: "France",
   },
   hours: "8h00–12h30 · 14h00–18h30 — sur rendez-vous",
+  locationName: "Lipjan, Kosovë",
+  mapsUrl: "https://www.google.com/maps/search/?api=1&query=Aliplus+Kosova+Lipjan",
 } as const;
 
 export const nav = {

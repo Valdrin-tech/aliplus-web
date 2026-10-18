@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
+import type { CSSProperties } from "react";
+import { Link } from "@/i18n/Link";
 import { WordReveal } from "@/components/motion/WordReveal";
 
 type Props = {
@@ -40,7 +41,7 @@ export function CinematicHero({
         quality={imageQuality}
         unoptimized={unoptimized}
         className="home-hero__img hero-scene__media"
-        style={{ objectPosition: imagePosition }}
+        style={{ "--hero-pos": imagePosition } as CSSProperties}
         sizes="100vw"
       />
       <div className="home-hero__veil hero-scene__veil" aria-hidden />

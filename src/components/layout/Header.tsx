@@ -1,30 +1,23 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { nav, site } from "@/lib/content";
+import { Link } from "@/i18n/Link";
+import { stripLocale } from "@/i18n/config";
+import { useT } from "@/i18n/LocaleProvider";
+import { site } from "@/lib/content";
 import { BrandLogos } from "@/components/layout/BrandLogos";
+import { LanguageSwitch } from "@/components/layout/LanguageSwitch";
 
 const OVER_HERO = new Set([
   "/",
   "/products/aliplus",
   "/company",
   "/usage-guide",
-  "/calculator",
   "/contact",
 ]);
 
 const LIGHT_OVERLAY = new Set<string>();
-
-const menuItems = [
-  { label: "Home", href: "/" },
-  { label: "Aliplus", href: "/products/aliplus" },
-  { label: "Company", href: "/company" },
-  { label: "Usage Guide", href: "/usage-guide" },
-  { label: "Calculator", href: "/calculator" },
-  { label: "Contact", href: "/contact" },
-];
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -32,13 +25,27 @@ function isActive(pathname: string, href: string) {
 }
 
 export function Header() {
-  const pathname = usePathname();
+  const t = useT();
+  const fullPath = usePathname();
+  // Locale-free path ("/en/company" → "/company") for route matching.
+  const pathname = stripLocale(fullPath ?? "/");
   const overHero = OVER_HERO.has(pathname);
   const headerRef = useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuSettled, setMenuSettled] = useState(false);
   const [compact, setCompact] = useState(false);
+  // Phones: scrolling down leaves only the menu button; scrolling up brings the rest back.
+  const [tucked, setTucked] = useState(false);
+  const lastY = useRef(0);
   const [headerHeight, setHeaderHeight] = useState(88);
+
+  const menuItems = [
+    { label: t.nav.home, href: "/" },
+    { label: t.nav.aliplus, href: "/products/aliplus" },
+    { label: t.nav.company, href: "/company" },
+    { label: t.nav.usageGuide, href: "/usage-guide" },
+    { label: t.nav.contact, href: "/contact" },
+  ];
 
   const [onLight, setOnLight] = useState(LIGHT_OVERLAY.has(pathname));
   const overlay = overHero || menuOpen;
@@ -55,7 +62,7 @@ export function Header() {
 
   useEffect(() => {
     setMenuOpen(false);
-  }, [pathname]);
+  }, [fullPath]);
 
   useEffect(() => {
     if (!menuOpen) {
@@ -75,7 +82,7 @@ export function Header() {
     const ro = new ResizeObserver(measure);
     ro.observe(el);
     return () => ro.disconnect();
-  }, [compact, pathname, overHero, menuOpen]);
+  }, [compact, fullPath, overHero, menuOpen]);
 
   useEffect(() => {
     let ticking = false;
@@ -85,7 +92,22 @@ export function Header() {
         const next = y > 40;
         return prev === next ? prev : next;
       });
-      if (LIGHT_OVERLAY.has(pathname)) {
+      const delta = y - lastY.current;
+      if (y <= 72) setTucked(false);
+      else if (delta > 6) setTucked(true);
+      else if (delta < -6) setTucked(false);
+      lastY.current = y;
+      // Pages can tag full-width sections with data-header-surface="light" | "dark";
+      // the bar switches to dark text while a light section sits under it.
+      const surfaces = document.querySelectorAll<HTMLElement>("[data-header-surface]");
+      if (surfaces.length) {
+        const probe = 40;
+        const under = Array.from(surfaces).find((el) => {
+          const rect = el.getBoundingClientRect();
+          return rect.top <= probe && rect.bottom > probe;
+        });
+        setOnLight(under?.dataset.headerSurface === "light");
+      } else if (LIGHT_OVERLAY.has(pathname)) {
         const intro = document.querySelector(".co-hero__copy");
         const bottom = intro?.getBoundingClientRect().bottom ?? 0;
         setOnLight(bottom > 96);
@@ -107,7 +129,7 @@ export function Header() {
       window.removeEventListener("scroll", onScroll);
       offLenis?.();
     };
-  }, [pathname]);
+  }, [pathname, fullPath]);
 
   useEffect(() => {
     document.body.classList.toggle("menu-open", menuOpen);
@@ -139,6 +161,7 @@ export function Header() {
           lightBar ? "is-on-light" : "",
           compact && !menuOpen ? "is-compact" : "",
           menuOpen ? "is-menu-open" : "",
+          tucked && !menuOpen ? "is-tucked" : "",
         ]
           .filter(Boolean)
           .join(" ")}
@@ -173,7 +196,7 @@ export function Header() {
                   </svg>
                 )}
               </span>
-              <span>{menuOpen ? "Close" : "Menu"}</span>
+              <span>{menuOpen ? t.nav.close : t.nav.menu}</span>
             </button>
 
             <div className="site-header__brand">
@@ -182,17 +205,12 @@ export function Header() {
 
             <div className="site-header__end">
               <Link
-                href={nav.support.href}
-                className={`site-header-link ${isActive(pathname, nav.support.href) ? "is-active" : ""}`}
+                href="/usage-guide"
+                className={`site-header-link ${isActive(pathname, "/usage-guide") ? "is-active" : ""}`}
               >
-                {nav.support.label}
+                {t.nav.usageGuide}
               </Link>
-              <Link
-                href="/contact"
-                className={`site-header-link ${isActive(pathname, "/contact") ? "is-active" : ""}`}
-              >
-                Contact us
-              </Link>
+              <LanguageSwitch />
             </div>
           </div>
         </div>
@@ -201,7 +219,7 @@ export function Header() {
       <button
         type="button"
         className={`site-menu-dismiss ${menuOpen ? "is-open" : ""}`}
-        aria-label="Close menu"
+        aria-label={t.nav.closeMenu}
         aria-hidden={!menuOpen}
         tabIndex={menuOpen ? 0 : -1}
         onClick={() => setMenuOpen(false)}
@@ -213,7 +231,7 @@ export function Header() {
         aria-hidden={!menuOpen}
         inert={!menuOpen}
       >
-        <nav className="site-menu__nav" aria-label="Site">
+        <nav className="site-menu__nav" aria-label={t.nav.siteNav}>
           {menuItems.map((item, i) => (
             <div
               key={item.href}
@@ -242,6 +260,7 @@ export function Header() {
               {site.email}
             </a>
           </div>
+          <LanguageSwitch />
         </div>
       </div>
     </>

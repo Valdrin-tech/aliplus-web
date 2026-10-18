@@ -8,15 +8,7 @@ type Props = {
 
 export function PageHero({ eyebrow, title, description }: Props) {
   return (
-    <div className="hero-scene page-hero relative overflow-hidden border-b border-olive/20 bg-gradient-to-br from-surface via-soft/40 to-soft-pink/50">
-      <div
-        className="pointer-events-none absolute -right-16 top-0 h-48 w-48 rounded-full bg-olive/15 blur-3xl hero-scene__orb"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute -left-10 bottom-0 h-40 w-40 rounded-full bg-accent/10 blur-3xl hero-scene__orb"
-        aria-hidden
-      />
+    <div className="hero-scene page-hero relative overflow-hidden border-b border-olive/20 bg-surface">
       <div className="hero-scene__copy relative mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
         {eyebrow && (
           <WordReveal

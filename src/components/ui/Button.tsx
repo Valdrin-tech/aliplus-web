@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/Link";
 import { type ComponentPropsWithoutRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 
@@ -18,14 +18,14 @@ const variants: Record<Variant, string> = {
     "shadow-[0_4px_16px_-8px_rgba(193,28,132,0.12)] " +
     "hover:-translate-y-0.5 " +
     "hover:border-accent/35 " +
-    "hover:bg-soft-pink/40 " +
+    "hover:bg-surface " +
     "hover:shadow-[0_10px_24px_-10px_rgba(193,28,132,0.18)] " +
     "active:translate-y-0 " +
     "active:shadow-[0_3px_10px_-7px_rgba(193,28,132,0.12)]",
 
   ghost:
     "bg-transparent text-forest border border-transparent " +
-    "hover:bg-soft " +
+    "hover:bg-surface " +
     "hover:border-olive/30 " +
     "hover:-translate-y-0.5 " +
     "active:translate-y-0",

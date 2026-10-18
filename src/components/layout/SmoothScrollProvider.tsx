@@ -25,8 +25,7 @@ const SCENE_SELECTOR = [
   "main .approach-hero__rule",
   "main .how-step__bar",
   "main .approach-chapter__circle",
-  "main .what-is__photo",
-  "main .what-is__orbit",
+  "main .what-is__product",
   "main .approach-chapter__photo",
   "main .integrate__media",
   "main .format-card__photo",
@@ -34,7 +33,8 @@ const SCENE_SELECTOR = [
   "main .diff-pillar",
   "main .how-step",
   "main .format-card",
-  "main .proven-card",
+  "main .fp-acc__list",
+  "main .fp-acc__media",
   "main .guide-panel",
   "main .usage-card",
   "main .usage-pack",
@@ -51,20 +51,19 @@ const SCENE_SELECTOR = [
   "main .usage-faq__item",
   "main .vintage-photo",
   "main figure",
-  "main .contact-panel",
   "main .product-stamp",
 ].join(",");
 
-const SKIP_CLOSEST = "header, footer, .site-footer, nav, .footer-hero__pin, .co-page, .cine-page";
+const SKIP_CLOSEST = "header, footer, .site-footer, nav, .footer-hero__pin, .co-page, .cine-page, .sheet-form";
 
 const OWN_MOTION =
-  ".approach-chapter__circle, .approach-chapter__photo, .approach-chapter__img, .approach-chapter__copy, .approach-chapter__stack, .ghost-fill-btn, .ghost-line-btn, .cine-hero__cta, .hero-pill, .pfl-btn, .cine-hero__rule, .approach-hero__rule, .how-step__bar, .home-cta__shot, .word-reveal";
+  ".approach-chapter__circle, .approach-chapter__photo, .approach-chapter__img, .approach-chapter__copy, .approach-chapter__stack, .ghost-fill-btn, .ghost-line-btn, .cine-hero__cta, .hero-pill, .pfl-btn, .cine-hero__rule, .approach-hero__rule, .how-step__bar, .home-cta__shot, .word-reveal, .sheet-form, .sheet-submit, .sheet-select";
 
 function kindOf(el: HTMLElement) {
   if (el.classList.contains("word-reveal")) return "soft";
   if (
     el.matches(
-      ".approach-chapter__circle, .what-is__orbit, .what-is__photo, .how-step__dot",
+      ".approach-chapter__circle, .what-is__product, .how-step__dot",
     )
   ) {
     return "circle";

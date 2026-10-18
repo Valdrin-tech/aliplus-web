@@ -2,8 +2,36 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, type ComponentType, type ReactNode } from "react";
+import { CinematicHero } from "@/components/layout/CinematicHero";
 import { WordReveal } from "@/components/motion/WordReveal";
+import {
+  AdvisorIcon,
+  ArrowRightIcon,
+  BagIcon,
+  BaleIcon,
+  BarnIcon,
+  CalendarIcon,
+  CowIcon,
+  DropletIcon,
+  FloraIcon,
+  GoatIcon,
+  LeafIcon,
+  MeatIcon,
+  MilkIcon,
+  MineralIcon,
+  MixerIcon,
+  PlusIcon,
+  ScaleIcon,
+  SheepIcon,
+  ShieldIcon,
+  SiloIcon,
+  SunIcon,
+  TroughIcon,
+  WheatIcon,
+} from "@/components/guide/FarmIcons";
+
+type IconType = ComponentType<{ size?: number }>;
 
 const toc = [
   { id: "on-the-farm", label: "On the farm" },
@@ -16,28 +44,37 @@ const toc = [
   { id: "faq", label: "Quick answers" },
 ] as const;
 
-const farmCards = [
+const glance: { icon: IconType; value: string; unit: string; label: string }[] = [
+  { icon: BagIcon, value: "22", unit: "kg", label: "Aliplus per ton of cereals" },
+  { icon: DropletIcon, value: "24", unit: "%", label: "Target moisture at mixing" },
+  { icon: CalendarIcon, value: "14", unit: "days", label: "Maturation before feeding" },
+  { icon: CowIcon, value: "1", unit: "formula", label: "Cattle, sheep and goats" },
+];
+
+const farmCards: { icons: IconType[]; title: string; body: ReactNode }[] = [
   {
+    icons: [CowIcon, SheepIcon, GoatIcon],
     title: "All ruminants",
     body: (
       <>
-        The same Aliplus mix suits <strong>cattle, sheep and goats</strong> — calves from{" "}
-        <strong>30 days</strong>, heifers, dairy cows, suckler cows, growing cattle, young bulls
-        and finishing animals — with <strong>amounts adjusted</strong> to each group.
+        The same mix suits <strong>cattle, sheep and goats</strong> — from calves at{" "}
+        <strong>30 days</strong> to dairy, suckler and finishing animals, with amounts adjusted to
+        each group.
       </>
     ),
   },
   {
+    icons: [WheatIcon],
     title: "Farm cereals",
     body: (
       <>
         <strong>Wheat, barley, maize, triticale, oats, rye, peas</strong> and other starch or
-        cellulose-based farm grains. One <strong>22 kg</strong> bag treats{" "}
-        <strong>one ton</strong>.
+        cellulose-based grains. One <strong>22 kg</strong> bag treats <strong>one ton</strong>.
       </>
     ),
   },
   {
+    icons: [MixerIcon],
     title: "Your equipment",
     body: (
       <>
@@ -46,85 +83,141 @@ const farmCards = [
       </>
     ),
   },
-] as const;
+];
 
 const packs = [
-  { label: "22 kg bag", detail: "Treats 1 ton of cereals" },
-  { label: "Pallet · 50 bags", detail: "Treats 50 tons of cereals" },
-  { label: "Big bag · 1100 kg", detail: "Treats 50 tons of cereals" },
-] as const;
+  { kind: "bag" as const, src: "/aliplus-bag-cutout.png", w: 583, h: 1046, label: "22 kg bag", meta: "Treats 1 ton", note: "One bag, one ton of your own cereals." },
+  { kind: "pallet" as const, src: "/aliplus-pallet-cutout.png", w: 551, h: 800, label: "Pallet · 50 bags", meta: "Treats 50 tons", note: "A season of rations on one pallet." },
+  { kind: "big" as const, src: "/aliplus-bigbag-cutout.png", w: 690, h: 800, label: "Big bag · 1100 kg", meta: "Treats 50 tons", note: "Fifty tons in one lift." },
+];
 
-const practice = [
+const steps: { icon: IconType; n: string; when: string; title: string; body: ReactNode }[] = [
   {
+    icon: MixerIcon,
     n: "01",
+    when: "Day 0",
     title: "Mix",
-    image: "/imgs/how-mix-cow.png",
-    alt: "Dairy cow beside an Aliplus feed bag",
     body: (
       <>
-        <p>
-          Grind or crush local cereals, then mix <strong>22 kg of Aliplus per ton</strong>. Adjust
-          water to about <strong>24% moisture</strong>. The blend is then ready to store.
-        </p>
-        <p>
-          <strong>Distribution of rations:</strong> by mixing bowl or by your other usual means.
-          Mix everything together evenly. Given the high productivity obtained in milk and
-          fattening with the Aliplus concept, it will be necessary to adapt the{" "}
-          <strong>CMV supplements</strong> by taking advice from Aliplus Kosova.
-        </p>
+        Grind or crush local cereals, then mix <strong>22 kg of Aliplus per ton</strong>. Adjust
+        water to about <strong>24% moisture</strong> and blend evenly.
       </>
     ),
   },
   {
+    icon: CalendarIcon,
     n: "02",
+    when: "Days 1–14",
     title: "Mature",
-    image: "/imgs/how-mature-cow.png",
-    alt: "Dairy cow beside a clock while the mix matures",
     body: (
-      <p>
-        Leave the mix for <strong>14 days</strong> before feeding. Natural processes in the grain
-        need that time so protein and energy values can rise.
-      </p>
+      <>
+        Leave the mix for <strong>14 days</strong>. Natural processes in the grain need that time so
+        protein and energy values can rise.
+      </>
     ),
   },
   {
+    icon: TroughIcon,
     n: "03",
+    when: "Day 14 onward",
     title: "Feed",
-    image: "/imgs/how-feed-cow.png",
-    alt: "Dairy cow eating from a feed trough",
     body: (
-      <p>
-        Take from the pile for <strong>daily or weekly rations</strong>.{" "}
-        <strong>Fibre — straw or hay</strong> — stays essential beside the treated grain for
-        every ruminant on the farm.
-      </p>
+      <>
+        Take from the pile for <strong>daily or weekly rations</strong>. Fibre —{" "}
+        <strong>straw or hay</strong> — stays essential beside the treated grain.
+      </>
     ),
   },
-] as const;
+];
 
-const useCards = [
+const ration: { icon: IconType; name: string; amount: string; note: string }[] = [
   {
-    image: "/guide-farm-means.jpg",
-    alt: "Farm mixer preparing an Aliplus ration",
-    kicker: "With the mixer you have",
-    title: "Homogeneous mix",
-    body: "Blend treated cereals with fibre and the rest of the ration. Adapt mineral supplements with advice from Aliplus Kosova.",
+    icon: WheatIcon,
+    name: "Aliplus-treated cereals",
+    amount: "4 – 15 kg +",
+    note: "The energy and protein base, set to production and local resources.",
   },
   {
-    image: "/guide-feeding.jpg",
-    alt: "Cattle feeding on an Aliplus ration",
-    kicker: "Dry rations",
-    title: "Up to once a week",
-    body: "A dry ration can be offered less often — less labour — when production and distribution allow.",
+    icon: SiloIcon,
+    name: "Silages",
+    amount: "Optional",
+    note: "Maize, maize cobs, grass, lucerne and similar forages.",
   },
   {
-    image: "/guide-ruminants.jpg",
-    alt: "Ruminants on the farm",
-    kicker: "Moist rations",
-    title: "Daily as needed",
-    body: "Moist rations are fed daily. The same base mix covers the herd, with amounts set for each group.",
+    icon: BaleIcon,
+    name: "Fibre — straw or hay",
+    amount: "Essential",
+    note: "Physical support for rumen flora. Mixed in, partly mixed, or offered on the side.",
   },
-] as const;
+  {
+    icon: MineralIcon,
+    name: "Mineral supplements (CMV)",
+    amount: "Adjusted",
+    note: "Adapted with advice from Aliplus Kosova as production rises.",
+  },
+];
+
+const groups = [
+  "Calves from 30 days",
+  "Heifers",
+  "Dairy cows",
+  "Suckler cows",
+  "Growing cattle",
+  "Young bulls",
+  "Finishing animals",
+  "Sheep & goats",
+];
+
+const flow: { icon: IconType; title: string; body: string }[] = [
+  {
+    icon: WheatIcon,
+    title: "In the grain",
+    body: "Partial hydrolysis of starch and cellulose, plus nitrogen from Aliplus.",
+  },
+  {
+    icon: TroughIcon,
+    title: "In the ration",
+    body: "High, balanced UF, PDIN and PDIE values — safer at larger cereal amounts.",
+  },
+  {
+    icon: FloraIcon,
+    title: "In the rumen",
+    body: "Prebiotic and probiotic support for a stronger population of rumen bacteria.",
+  },
+];
+
+const expect: { icon: IconType; title: string; body: ReactNode }[] = [
+  {
+    icon: ScaleIcon,
+    title: "In the ration",
+    body: (
+      <>
+        Treated cereals carry balanced <strong>energy and protein</strong>. Prebiotic support
+        helps the rumen use more of what is already there.
+      </>
+    ),
+  },
+  {
+    icon: MilkIcon,
+    title: "In milk",
+    body: (
+      <>
+        Farms report <strong>steadier quality</strong> and fewer losses when the rumen works more
+        evenly — a feeding result, not a veterinary claim.
+      </>
+    ),
+  },
+  {
+    icon: MeatIcon,
+    title: "In meat",
+    body: (
+      <>
+        More from the same farm grain: <strong>conversion, finish and carcass quality</strong>{" "}
+        without a new feeding system.
+      </>
+    ),
+  },
+];
 
 const faqs = [
   {
@@ -153,124 +246,78 @@ const faqs = [
   },
 ] as const;
 
-function Diamond() {
-  return (
-    <svg className="usage-nav__icon" viewBox="0 0 8 8" aria-hidden>
-      <rect x="2.15" y="2.15" width="3.7" height="3.7" transform="rotate(45 4 4)" />
-    </svg>
-  );
-}
-
-function UsageHowTo() {
-  const [active, setActive] = useState(0);
-  const [shown, setShown] = useState(true);
-
-  const select = (index: number) => {
-    if (index === active) return;
-    setShown(false);
-    window.setTimeout(() => {
-      setActive(index);
-      setShown(true);
-    }, 100);
-  };
-
-  const step = practice[active];
-
-  return (
-    <div className="usage-how">
-      <div className="usage-how__menu" role="tablist" aria-label="How to use">
-        {practice.map((item, index) => (
-          <button
-            key={item.n}
-            type="button"
-            role="tab"
-            aria-selected={index === active}
-            className={`usage-how__tab${index === active ? " is-current" : ""}`}
-            onClick={() => select(index)}
-          >
-            <span className="usage-how__n">{item.n}</span>
-            <span className="usage-how__tab-title">{item.title}</span>
-          </button>
-        ))}
-      </div>
-      <div className="usage-how__stage">
-        <div className={`usage-how__pane${shown ? " is-in" : ""}`}>
-          <div className="usage-how__visual">
-            <Image
-              src={step.image}
-              alt={step.alt}
-              width={840}
-              height={630}
-              className="usage-how__art"
-              sizes="(max-width: 991px) 90vw, 42em"
-              priority={false}
-            />
-          </div>
-          <div className="usage-how__copy">
-            <h3 className="usage-how__title">{step.title}</h3>
-            {step.body}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function scrollToId(id: string) {
   const el = document.getElementById(id);
   if (!el) return;
-  const lenis = (window as Window & { __lenis?: { scrollTo: (t: HTMLElement, o?: { offset?: number; duration?: number }) => void } }).__lenis;
+  const lenis = (
+    window as Window & {
+      __lenis?: { scrollTo: (t: HTMLElement, o?: { offset?: number; duration?: number }) => void };
+    }
+  ).__lenis;
   if (lenis) {
-    lenis.scrollTo(el, { offset: -72, duration: 1.15 });
+    lenis.scrollTo(el, { offset: -96, duration: 1.15 });
   } else {
     el.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 }
 
-function UsageNav({ active }: { active: string }) {
+function GuideNav({ active }: { active: string }) {
+  const index = toc.findIndex((item) => item.id === active);
   return (
-    <nav className="usage-nav" aria-label="Usage Guide">
-      <p className="usage-nav__title">Usage Guide</p>
-      <div className="usage-nav__list">
-        {toc.map((item) => (
-          <a
-            key={item.id}
-            href={`#${item.id}`}
-            className={`usage-nav__item ${active === item.id ? "is-active" : ""}`}
-            onClick={(event) => {
-              event.preventDefault();
-              scrollToId(item.id);
-            }}
-          >
-            <Diamond />
-            <span>{item.label}</span>
-          </a>
+    <nav className="ug-nav" aria-label="Usage Guide sections">
+      <p className="ug-nav__title">In this guide</p>
+      <ol className="ug-nav__list">
+        {toc.map((item, i) => (
+          <li key={item.id}>
+            <a
+              href={`#${item.id}`}
+              className={`ug-nav__item${active === item.id ? " is-active" : ""}${i < index ? " is-done" : ""}`}
+              aria-current={active === item.id ? "location" : undefined}
+              onClick={(event) => {
+                event.preventDefault();
+                scrollToId(item.id);
+              }}
+            >
+              <span className="ug-nav__n">{String(i + 1).padStart(2, "0")}</span>
+              <span>{item.label}</span>
+            </a>
+          </li>
         ))}
-      </div>
+      </ol>
+      <Link href="/contact" className="ug-nav__cta">
+        <AdvisorIcon size={18} />
+        Ask an advisor
+      </Link>
     </nav>
   );
 }
 
-function UsageFaq() {
-  const [open, setOpen] = useState<string | null>(null);
-
+function Faq() {
+  const [open, setOpen] = useState<number | null>(0);
   return (
-    <div className="usage-faq">
-      {faqs.map((item) => {
-        const isOpen = open === item.q;
+    <div className="ug-faq">
+      {faqs.map((item, i) => {
+        const isOpen = open === i;
         return (
-          <div key={item.q} className={`usage-faq__item${isOpen ? " is-open" : ""}`}>
-            <button
-              type="button"
-              className="usage-faq__q"
-              aria-expanded={isOpen}
-              onClick={() => setOpen(isOpen ? null : item.q)}
-            >
-              <span>{item.q}</span>
-              <span className="usage-faq__plus" aria-hidden />
-            </button>
-            <div className="usage-faq__a">
-              <p>{item.a}</p>
+          <div key={item.q} className={`ug-faq__item${isOpen ? " is-open" : ""}`}>
+            <h3 className="ug-faq__h">
+              <button
+                type="button"
+                className="ug-faq__q"
+                aria-expanded={isOpen}
+                aria-controls={`ug-faq-${i}`}
+                onClick={() => setOpen(isOpen ? null : i)}
+              >
+                <span>{item.q}</span>
+                <span className="ug-faq__icon">
+                  <PlusIcon size={18} />
+                </span>
+              </button>
+            </h3>
+            <div id={`ug-faq-${i}`} className="ug-faq__a" role="region">
+              <div>
+                <p>{item.a}</p>
+              </div>
             </div>
           </div>
         );
@@ -279,8 +326,33 @@ function UsageFaq() {
   );
 }
 
-function Copy({ children }: { children: ReactNode }) {
-  return <div className="usage-copy">{children}</div>;
+function SectionHead({
+  n,
+  title,
+  children,
+}: {
+  n: string;
+  title: string;
+  children?: ReactNode;
+}) {
+  return (
+    <header className="ug-head">
+      <p className="ug-eyebrow">
+        <span>{n}</span>
+        {title}
+      </p>
+      <WordReveal as="h2" className="ug-h2" text={title} step={0.038} />
+      {children ? <div className="ug-lead">{children}</div> : null}
+    </header>
+  );
+}
+
+function Tile({ icon: IconC, size = 26, tone = "olive" }: { icon: IconType; size?: number; tone?: "olive" | "soft" }) {
+  return (
+    <span className={`ug-tile ug-tile--${tone}`}>
+      <IconC size={size} />
+    </span>
+  );
 }
 
 export function UsageGuideScience() {
@@ -299,7 +371,7 @@ export function UsageGuideScience() {
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (visible?.target.id) setActive(visible.target.id);
       },
-      { rootMargin: "-18% 0px -62% 0px", threshold: [0.08, 0.2, 0.4] },
+      { rootMargin: "-20% 0px -60% 0px", threshold: [0, 0.1, 0.3] },
     );
 
     nodes.forEach((el) => observer.observe(el));
@@ -307,351 +379,358 @@ export function UsageGuideScience() {
   }, []);
 
   return (
-    <div className="usage-science">
-      <section className="usage-hero hero-scene">
-        <Image
-          src="/guide-hero.jpg"
-          alt="Wheat field at last light"
-          fill
-          priority
-          className="usage-hero__media hero-scene__media"
-          sizes="100vw"
-        />
-        <div className="usage-hero__veil hero-scene__veil" aria-hidden />
-        <div className="usage-hero__copy hero-scene__copy">
-          <p className="usage-hero__crumbs">
-            <span>Guide</span>
-            <i />
-            <span>Usage Guide</span>
-          </p>
-          <WordReveal as="h1" className="usage-hero__title" text="Usage Guide" slow delay={0.28} />
+    <div className="ug">
+      <CinematicHero
+        image="/guide-hero.jpg"
+        imageAlt="Wheat field at last light"
+        imagePosition="50% 62%"
+        crumbs={["Guide", "Usage Guide"]}
+        title={"Usage\nGuide"}
+        tagline="Mix. Mature. Feed."
+        body="Prepare Aliplus on the farm with cereals you already grow, store it correctly, and feed a high-performance ration with the equipment you already have."
+        cta={{ href: "/contact", label: "Talk to our team" }}
+        note="One 22 kg bag treats one ton of cereals — ready to feed after 14 days."
+      />
+
+      <section className="ug-glance" aria-label="Aliplus at a glance">
+        <div className="ug-glance__inner">
+          {glance.map((item) => (
+            <div key={item.label} className="ug-glance__item">
+              <Tile icon={item.icon} size={28} />
+              <p className="ug-glance__value">
+                {item.value}
+                <span>{item.unit}</span>
+              </p>
+              <p className="ug-glance__label">{item.label}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      <section className="usage-body">
-        <div className="usage-body__wrap">
-          <UsageNav active={active} />
+      <section className="ug-body">
+        <div className="ug-body__wrap">
+          <GuideNav active={active} />
 
-          <div className="usage-area">
-            <div className="usage-intro">
-              <WordReveal
-                as="h2"
-                className="usage-h2"
-                text="Prepare Aliplus on the farm with cereals you already grow, store it correctly, and feed a high-performance ration with the equipment you already have."
-              />
-            </div>
-
-            <div className="usage-rule" />
-
-            <div id="on-the-farm" className="usage-block">
-              <div className="usage-heading">
-                <WordReveal as="h2" className="usage-h2" text="On the farm" />
-                <p className="usage-lead">
+          <div className="ug-content">
+            {/* 01 · On the farm */}
+            <div id="on-the-farm" className="ug-block">
+              <SectionHead n="01" title="On the farm">
+                <p>
                   Fourteen natural components, mixed at <strong>22 kg per ton</strong> of farm
-                  cereals and matured for <strong>14 days</strong>. One formula across the herd —
-                  cattle, sheep and goats — without a new feeding system.
+                  cereals and matured for <strong>14 days</strong>. One formula across the herd,
+                  without a new feeding system.
                 </p>
-              </div>
-              <div className="usage-cards">
+              </SectionHead>
+              <div className="ug-cards">
                 {farmCards.map((card) => (
-                  <article key={card.title} className="usage-card">
-                    <WordReveal as="h3" className="usage-h3" text={card.title} />
+                  <article key={card.title} className="ug-card">
+                    <div className="ug-card__icons">
+                      {card.icons.map((IconC, i) => (
+                        <Tile key={i} icon={IconC} tone="soft" />
+                      ))}
+                    </div>
+                    <h3 className="ug-h3">{card.title}</h3>
                     <p>{card.body}</p>
                   </article>
                 ))}
               </div>
             </div>
 
-            <div className="usage-rule" />
-
-            <div id="prepare" className="usage-block">
-              <div className="usage-heading">
-                <WordReveal as="h2" className="usage-h2" text="Prepare the mix" />
-                <Copy>
+            {/* 02 · Prepare */}
+            <div id="prepare" className="ug-block">
+              <SectionHead n="02" title="Prepare the mix" />
+              <div className="ug-split">
+                <div className="ug-copy">
                   <p>
-                    Aliplus is <strong>simple to apply</strong> on the farm. The cereals available
-                    locally — wheat, barley, oats, maize (wet or dry), triticale, rye, spelt, peas,
-                    cereal mixes or cereal by-products — are <strong>ground or crushed</strong>, then
-                    mixed with Aliplus at <strong>1 ton of grain per 22 kg bag</strong>.
+                    Aliplus is <strong>simple to apply</strong> on the farm. Local cereals — wheat,
+                    barley, oats, maize (wet or dry), triticale, rye, spelt, peas, cereal mixes or
+                    by-products — are <strong>ground or crushed</strong>, then mixed at{" "}
+                    <strong>one 22 kg bag per ton of grain</strong>.
                   </p>
                   <p>
-                    Then <strong>adjust the water</strong> to reach about <strong>24% moisture</strong>.
-                    The mix is ready for storage. You can treat the grain yourself, or Aliplus Kosova
-                    can connect you with a trusted local service.
+                    Then <strong>adjust the water</strong> to about <strong>24% moisture</strong>.
+                    The mix is ready for storage.
                   </p>
-                </Copy>
+                  <div className="ug-callout">
+                    <Tile icon={AdvisorIcon} size={22} tone="soft" />
+                    <p>
+                      Treat the grain with your own equipment, or Aliplus Kosova can connect you
+                      with a <strong>trusted local treatment service</strong>.
+                    </p>
+                  </div>
+                </div>
+                <figure className="ug-photo">
+                  <Image
+                    src="/guide-grains.jpg"
+                    alt="Farm cereals ready to mix with Aliplus"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 991px) 100vw, 36vw"
+                  />
+                  <figcaption className="ug-photo__badge">
+                    <strong>22 kg</strong>
+                    <span>per ton</span>
+                  </figcaption>
+                </figure>
               </div>
-              <div className="usage-packs">
+
+              <h3 className="ug-subhead">Formats</h3>
+              <div className="ug-packs">
                 {packs.map((pack) => (
-                  <article key={pack.label} className="usage-pack">
-                    <WordReveal as="h3" className="usage-h3" text={pack.label} />
-                    <p>{pack.detail}</p>
+                  <article key={pack.label} className={`ug-pack ug-pack--${pack.kind}`}>
+                    <Image
+                      src={pack.src}
+                      alt=""
+                      width={pack.w}
+                      height={pack.h}
+                      unoptimized
+                      className="ug-pack__shot"
+                    />
+                    <div className="ug-pack__card">
+                      <span className="ug-pack__meta">{pack.meta}</span>
+                      <p className="ug-pack__label">{pack.label}</p>
+                      <p className="ug-pack__note">{pack.note}</p>
+                    </div>
                   </article>
                 ))}
               </div>
-              <p className="usage-note">
-                <strong>Note.</strong> Treated cereals can be prepared with your own equipment or
-                treated on the farm by an external service.
-              </p>
             </div>
 
-            <div className="usage-rule" />
-
-            <div id="how-to-use" className="usage-block usage-block--how">
-              <div className="usage-heading">
-                <WordReveal as="h2" className="usage-h2" text="How to use" />
-                <p className="usage-lead">
-                  Three steps sit between the bag and the trough. <strong>Mix</strong> on the
-                  farm, wait <strong>14 days</strong>, then <strong>feed</strong> with the
-                  cereals already in the barn.
+            {/* 03 · How to use */}
+            <div id="how-to-use" className="ug-block">
+              <SectionHead n="03" title="How to use">
+                <p>
+                  Three steps between the bag and the trough: <strong>mix</strong> on the farm, wait{" "}
+                  <strong>14 days</strong>, then <strong>feed</strong>.
                 </p>
+              </SectionHead>
+              <ol className="ug-steps">
+                {steps.map((step) => (
+                  <li key={step.n} className="ug-step">
+                    <div className="ug-step__node">
+                      <step.icon size={30} />
+                    </div>
+                    <p className="ug-step__when">
+                      <span>{step.n}</span>
+                      {step.when}
+                    </p>
+                    <h3 className="ug-h3">{step.title}</h3>
+                    <p className="ug-step__body">{step.body}</p>
+                  </li>
+                ))}
+              </ol>
+              <div className="ug-storage">
+                <div className="ug-storage__media">
+                  <Image
+                    src="/company-barn.jpg"
+                    alt="Open-sided farm barn for storing the mix"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 991px) 100vw, 28vw"
+                  />
+                </div>
+                <div className="ug-storage__copy">
+                  <Tile icon={BarnIcon} size={26} />
+                  <h3 className="ug-h3">Storage</h3>
+                  <p>
+                    Prepare months ahead, even a year. Keep the mix <strong>indoors, without
+                    plastic cover</strong>. A <strong>10-day transition</strong> from the previous
+                    ration is recommended.
+                  </p>
+                </div>
               </div>
-              <UsageHowTo />
-              <p className="usage-note">
-                <strong>Storage.</strong> Prepare months ahead, even a year. Keep the mix{" "}
-                <strong>indoors without plastic cover</strong>. A{" "}
-                <strong>10-day transition</strong> from the previous ration is recommended.
-              </p>
             </div>
 
-            <div className="usage-rule" />
-
-            <div id="ration" className="usage-block">
-              <div className="usage-heading">
-                <WordReveal as="h2" className="usage-h2" text="Build the ration" />
-                <Copy>
-                  <p>
-                    When you first use this concept on the farm, Aliplus advisors help you{" "}
-                    <strong>optimise the ration</strong>. According to your production and local
-                    resources, rations are built from{" "}
-                    <strong>Aliplus-treated cereals (from 4 kg to 15 kg and more)</strong> and may
-                    also include <strong>silages</strong> — maize, maize cobs, grass, lucerne and
-                    similar forages.
-                  </p>
-                  <p>
-                    <strong>Fibre</strong> is managed in the usual way with coarse forage —{" "}
-                    <strong>straw or hay</strong>. It is essential for rumen flora. Mix it through
-                    the ration, partly through, or offer it separately. Mineral supplements (
-                    <strong>CMV</strong>) should be adjusted with advice from Aliplus Kosova.
-                  </p>
-                  <p>
-                    Your Aliplus ration suits <strong>all your ruminants</strong>: calves from{" "}
-                    <strong>30 days</strong>, heifers, dairy cows, suckler cows, growing cattle,
-                    young bulls and finishing animals. You can distribute{" "}
-                    <strong>the same rations</strong>, with amounts adapted to each group.
-                  </p>
-                </Copy>
-              </div>
-              <div className="usage-split">
-                <aside className="usage-panel">
-                  <p>
-                    Prepare rations with a <strong>feed mixer</strong> or your usual equipment.
-                    Blend every ingredient until the mix is <strong>homogeneous</strong>. Take
-                    advice from Aliplus Kosova farmers when you set the first ration.
-                  </p>
-                  <p>
-                    Fibre can be <strong>fully or partly mixed</strong> into the ration, or given
-                    on the side. The base stays the same across the herd.
-                  </p>
-                </aside>
-                <figure className="usage-photo">
+            {/* 04 · Ration */}
+            <div id="ration" className="ug-block">
+              <SectionHead n="04" title="Build the ration">
+                <p>
+                  When you first use the concept, Aliplus advisors help you{" "}
+                  <strong>optimise the ration</strong> for your production and local resources.
+                </p>
+              </SectionHead>
+              <div className="ug-ration">
+                <ul className="ug-ration__list">
+                  {ration.map((row) => (
+                    <li key={row.name} className="ug-ration__row">
+                      <Tile icon={row.icon} size={24} tone="soft" />
+                      <div className="ug-ration__text">
+                        <p className="ug-ration__name">{row.name}</p>
+                        <p className="ug-ration__note">{row.note}</p>
+                      </div>
+                      <span className="ug-ration__amount">{row.amount}</span>
+                    </li>
+                  ))}
+                </ul>
+                <figure className="ug-photo ug-photo--tall">
                   <Image
-                    src="/float-sheep.jpg"
-                    alt="Cattle on pasture — an Aliplus ration"
+                    src="/guide-feeding.jpg"
+                    alt="Cattle feeding on an Aliplus ration"
                     fill
-                    className="object-cover object-[center_45%]"
-                    sizes="(max-width: 991px) 100vw, 39em"
+                    className="object-cover"
+                    sizes="(max-width: 991px) 100vw, 32vw"
                   />
                 </figure>
               </div>
+              <div className="ug-groups">
+                <p className="ug-groups__label">One ration base for</p>
+                <ul>
+                  {groups.map((g) => (
+                    <li key={g}>{g}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
-            <div className="usage-rule" />
-
-            <div id="feed" className="usage-block">
-              <div className="usage-heading">
-                <WordReveal as="h2" className="usage-h2" text="Feed" />
-                <Copy>
-                  <p>
-                    Distribution uses a <strong>feed mixer</strong> or the tools you already have.
-                    Mix the whole contents until they are <strong>homogeneous</strong>. Because
-                    milk and finishing results can rise with the Aliplus concept,{" "}
-                    <strong>CMV supplements</strong> should be adapted with advice from Aliplus
-                    Kosova.
-                  </p>
-                  <p>
-                    <strong>Note.</strong> Depending on ration type, production and how you
-                    distribute, animals can be fed up to <strong>once a week</strong> on a{" "}
-                    <strong>dry ration</strong> — less labour — or <strong>every day</strong> on a{" "}
-                    <strong>moist ration</strong>.
-                  </p>
-                </Copy>
-              </div>
-              <aside className="usage-panel">
+            {/* 05 · Feed */}
+            <div id="feed" className="ug-block">
+              <SectionHead n="05" title="Feed">
                 <p>
-                  Grain treated with Aliplus is the <strong>ideal feed for every rumen</strong>.
-                  Nutrient values are high and balanced (<strong>UF, PDIN, PDIE</strong>). Through
-                  its <strong>prebiotic</strong> qualities it supports the flora and fauna of the
-                  animal — a healthier, more natural feed for ruminants.
+                  Distribute with a <strong>feed mixer</strong> or the tools you already have, until
+                  the ration is <strong>homogeneous</strong>. Because milk and finishing results can
+                  rise, adapt <strong>CMV supplements</strong> with advice from Aliplus Kosova.
                 </p>
-              </aside>
-              <div className="usage-uses">
-                {useCards.map((card) => (
-                  <article key={card.title} className="usage-use">
-                    <div className="usage-use__media">
-                      <Image
-                        src={card.image}
-                        alt={card.alt}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 991px) 100vw, 33vw"
-                      />
-                      <div className="usage-use__overlay">
-                        <p className="usage-use__kicker">{card.kicker}</p>
-                        <WordReveal as="h3" className="usage-use__title" text={card.title} />
-                      </div>
-                    </div>
-                    <p className="usage-use__body">{card.body}</p>
+              </SectionHead>
+              <div className="ug-compare">
+                <article className="ug-compare__card">
+                  <div className="ug-compare__top">
+                    <Tile icon={CalendarIcon} size={26} />
+                    <p className="ug-compare__kicker">Dry ration</p>
+                  </div>
+                  <p className="ug-compare__value">Up to once a week</p>
+                  <p>
+                    Offered less often when production and distribution allow —{" "}
+                    <strong>less labour</strong> for the same base mix.
+                  </p>
+                </article>
+                <article className="ug-compare__card ug-compare__card--dark">
+                  <div className="ug-compare__top">
+                    <Tile icon={SunIcon} size={26} />
+                    <p className="ug-compare__kicker">Moist ration</p>
+                  </div>
+                  <p className="ug-compare__value">Every day</p>
+                  <p>
+                    Fed daily as needed. The same base covers the herd, with amounts set for each
+                    group.
+                  </p>
+                </article>
+              </div>
+              <blockquote className="ug-quote">
+                <LeafIcon size={26} />
+                <p>
+                  Grain treated with Aliplus is the <strong>ideal feed for every rumen</strong> —
+                  high, balanced <strong>UF, PDIN and PDIE</strong> values, with prebiotic support
+                  for the animal’s flora and fauna.
+                </p>
+              </blockquote>
+            </div>
+
+            {/* 06 · Concept */}
+            <div id="concept" className="ug-block">
+              <SectionHead n="06" title="The concept">
+                <p>
+                  Aliplus does not replace nutrition. It helps animals use more of the cereals
+                  already on the farm.
+                </p>
+              </SectionHead>
+              <ol className="ug-flow">
+                {flow.map((item, i) => (
+                  <li key={item.title} className="ug-flow__item">
+                    <Tile icon={item.icon} size={30} />
+                    <h3 className="ug-h3">{item.title}</h3>
+                    <p>{item.body}</p>
+                    {i < flow.length - 1 ? (
+                      <span className="ug-flow__arrow" aria-hidden>
+                        <ArrowRightIcon size={22} />
+                      </span>
+                    ) : null}
+                  </li>
+                ))}
+              </ol>
+              <div className="ug-columns">
+                <article>
+                  <div className="ug-columns__head">
+                    <ShieldIcon size={22} />
+                    <h3 className="ug-h3">Treated cereals — premium feed</h3>
+                  </div>
+                  <p>
+                    <strong>Anti-acidosis</strong> support lets the ration carry larger amounts of
+                    treated cereals more safely — typically <strong>3 to 8 kg</strong> in dairy and
+                    finishing, and more when the farm allows.
+                  </p>
+                  <p>
+                    Other components work on <strong>rumination, salivation, calmness and
+                    digestion</strong>. Respecting the animal’s metabolism, energy goes into
+                    producing more, and producing better.
+                  </p>
+                </article>
+                <article>
+                  <div className="ug-columns__head">
+                    <FloraIcon size={22} />
+                    <h3 className="ug-h3">Feeding the rumen bacteria</h3>
+                  </div>
+                  <p>
+                    The <strong>prebiotic / probiotic</strong> effect in the grain supports a much
+                    stronger development of rumen flora and fauna — built on treated cereals and{" "}
+                    <strong>fibre (straw, hay)</strong> for physical support.
+                  </p>
+                  <p>
+                    Ruminants multiply these bacteria, making them the most{" "}
+                    <strong>economical, ecological and natural</strong> feed the animal has.
+                  </p>
+                </article>
+              </div>
+            </div>
+
+            {/* 07 · Expect */}
+            <div id="expect" className="ug-block">
+              <SectionHead n="07" title="What to expect">
+                <p>
+                  The <strong>fourteen components</strong> work together in the grain, the ration
+                  and the rumen.
+                </p>
+              </SectionHead>
+              <div className="ug-cards">
+                {expect.map((card) => (
+                  <article key={card.title} className="ug-card ug-card--line">
+                    <Tile icon={card.icon} size={26} />
+                    <h3 className="ug-h3">{card.title}</h3>
+                    <p>{card.body}</p>
                   </article>
                 ))}
               </div>
             </div>
 
-            <div className="usage-rule" />
-
-            <div id="concept" className="usage-block">
-              <div className="usage-heading">
-                <WordReveal as="h2" className="usage-h2" text="The concept" />
-                <p className="usage-lead">
-                  Aliplus does not replace nutrition. It helps animals use more of the cereals
-                  already on the farm — in the <strong>grain</strong>, in the{" "}
-                  <strong>ration</strong>, and in the <strong>rumen</strong>.
-                </p>
-              </div>
-              <div className="usage-concept">
-                <article className="usage-concept__col">
-                  <WordReveal
-                    as="h3"
-                    className="usage-h3"
-                    text="Treated cereals — premium feed for cattle"
-                  />
-                  <Copy>
-                    <p>
-                      <strong>Optimising the grain</strong> — partial hydrolysis of starch and
-                      cellulose, plus nitrogen from Aliplus — helps animals express their{" "}
-                      <strong>full natural potential</strong>.
-                    </p>
-                    <p>
-                      <strong>Anti-acidosis</strong> support lets the ration carry{" "}
-                      <strong>larger amounts of treated cereals</strong> more safely — typically{" "}
-                      <strong>3 to 8 kg</strong> in dairy and finishing, and more when the farm
-                      allows.
-                    </p>
-                    <p>
-                      Other components work on{" "}
-                      <strong>rumination, salivation, calmness and digestion</strong>. By
-                      respecting the animal’s metabolism, energy goes into{" "}
-                      <strong>producing more, and producing better</strong>.
-                    </p>
-                  </Copy>
-                </article>
-                <article className="usage-concept__col">
-                  <WordReveal
-                    as="h3"
-                    className="usage-h3"
-                    text="The principle — feeding the rumen bacteria"
-                  />
-                  <Copy>
-                    <p>
-                      With high, balanced values (<strong>UF, PDIN, PDIE</strong>), grain treated
-                      with Aliplus is the <strong>ideal feed for every rumen</strong>.
-                    </p>
-                    <p>
-                      The <strong>prebiotic / probiotic</strong> effect of Aliplus in the grain
-                      then supports a <strong>much stronger development of rumen bacteria</strong>{" "}
-                      — the flora and fauna of the rumen.
-                    </p>
-                    <p>
-                      That development rests on the treated cereals and on{" "}
-                      <strong>fibre (straw, hay)</strong>, which gives the microbes physical
-                      support. The ruminant is the mammal that can multiply these bacteria. They
-                      become the most <strong>economical, ecological and natural</strong> feed
-                      the animal has.
-                    </p>
-                  </Copy>
-                </article>
-              </div>
-              <Image
-                src="/imgs/guide-cow.svg"
-                alt=""
-                width={280}
-                height={158}
-                className="usage-cow"
-                aria-hidden
-              />
-            </div>
-
-            <div className="usage-rule" />
-
-            <div id="expect" className="usage-block">
-              <div className="usage-heading">
-                <WordReveal as="h2" className="usage-h2" text="What to expect" />
-                <p className="usage-lead">
-                  The <strong>fourteen components</strong> work together in the grain, the ration
-                  and the rumen — protein use, energy, and steadier flora.
-                </p>
-              </div>
-              <div className="usage-cards">
-                <article className="usage-card">
-                  <WordReveal as="h3" className="usage-h3" text="In the ration" />
-                  <p>
-                    Treated cereals carry balanced <strong>energy and protein</strong> values.
-                    Prebiotic support helps the rumen use more of what is already there.
-                  </p>
-                </article>
-                <article className="usage-card">
-                  <WordReveal as="h3" className="usage-h3" text="In milk" />
-                  <p>
-                    Farms report <strong>steadier quality</strong> and fewer losses when the rumen
-                    works more evenly — a feeding result, not a veterinary claim.
-                  </p>
-                </article>
-                <article className="usage-card">
-                  <WordReveal as="h3" className="usage-h3" text="In meat" />
-                  <p>
-                    The aim is more from the same farm grain:{" "}
-                    <strong>conversion, finish and carcass quality</strong> without a new feeding
-                    system.
-                  </p>
-                </article>
-              </div>
-            </div>
-
-            <div className="usage-rule" />
-
-            <div id="faq" className="usage-block usage-block--faq">
-              <WordReveal as="h2" className="usage-h2" text="Quick answers" />
-              <UsageFaq />
+            {/* 08 · FAQ */}
+            <div id="faq" className="ug-block ug-block--last">
+              <SectionHead n="08" title="Quick answers" />
+              <Faq />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="usage-close">
-        <div className="usage-close__copy">
-          <WordReveal as="h2" className="usage-close__title" text="Start with your own cereals." />
-          <p className="usage-close__lead">
-            Estimate the first mix at <strong>22 kg per ton</strong>, or talk to the team about a
-            farm transition.
+      <section className="ug-close">
+        <div className="ug-close__copy">
+          <WordReveal as="h2" className="ug-close__title" text="Start with your own cereals." step={0.038} />
+          <p className="ug-close__lead">
+            Plan the first mix at 22 kg per ton with our advisors, or see the product in detail.
           </p>
-          <div className="usage-close__actions">
-            <Link href="/calculator" className="ghost-fill-btn ghost-fill-btn--light">
-              Open the calculator
-            </Link>
-            <Link href="/contact" className="ghost-line-btn ghost-line-btn--light">
+          <div className="ug-close__actions">
+            <Link href="/contact" className="ug-btn ug-btn--light">
               Talk to our team
             </Link>
+            <Link href="/products/aliplus" className="ug-btn ug-btn--line">
+              See the product
+            </Link>
           </div>
+        </div>
+        <div className="ug-close__icons" aria-hidden>
+          {[WheatIcon, MixerIcon, CalendarIcon, TroughIcon].map((IconC, i) => (
+            <span key={i} className="ug-close__icon">
+              <IconC size={34} />
+            </span>
+          ))}
         </div>
       </section>
     </div>

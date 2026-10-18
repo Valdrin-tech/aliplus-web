@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/Link";
 
 type BrandMarkProps = {
   size?: "sm" | "md" | "lg";
@@ -76,7 +76,7 @@ export function BrandLogos({
     <Link
       href="/"
       className={`group brand-logos transition-opacity hover:opacity-95 ${compact ? "is-compact" : ""}`}
-      aria-label="Aliplus Kosova — Home"
+      aria-label="Aliplus Kosova"
     >
       <BrandMark size="sm" tone={tone} />
     </Link>

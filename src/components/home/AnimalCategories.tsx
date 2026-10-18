@@ -46,8 +46,8 @@ export function AnimalCategories() {
       </div>
 
       <p className="mt-10 text-center text-sm text-muted">
-        <Link href="/calculator" className="font-medium text-accent hover:underline">
-          Estimez vos besoins Aliplus
+        <Link href="/contact" className="font-medium text-accent hover:underline">
+          Demandez une estimation
         </Link>{" "}
         selon votre cheptel.
       </p>

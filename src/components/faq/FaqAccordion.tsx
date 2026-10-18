@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { faqItems } from "@/lib/content";
+import { useT } from "@/i18n/LocaleProvider";
 
 type Props = { limit?: number };
 
 export function FaqAccordion({ limit }: Props) {
+  const faqItems = useT().faq.items;
   const items = limit ? faqItems.slice(0, limit) : faqItems;
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
@@ -33,7 +34,7 @@ export function FaqAccordion({ limit }: Props) {
               </span>
             </button>
             {open && (
-              <div className="border-t border-olive/15 bg-soft/40 px-6 pb-5 pt-2 text-sm leading-relaxed text-muted">
+              <div className="border-t border-olive/15 bg-surface px-6 pb-5 pt-2 text-sm leading-relaxed text-muted">
                 {item.a}
               </div>
             )}

@@ -1,34 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/Link";
+import { useT } from "@/i18n/LocaleProvider";
 import { useEffect, useRef } from "react";
 import { WordReveal } from "@/components/motion/WordReveal";
 
-const steps = [
-  {
-    n: "01",
-    title: "Fourteen natural components",
-    body: "Urea, plant extracts, oligoelements and clay in one formula — mixed at 22 kg per ton of cereals you already grow.",
-  },
-  {
-    n: "02",
-    title: "Rumen-ready maturation",
-    body: "Adjust moisture to about 24% and let the mix mature for 14 days so protein and energy values can rise.",
-  },
-  {
-    n: "03",
-    title: "Steadier nutrient use",
-    body: "Prebiotic and probiotic support for rumen flora — energetic rations without the usual acidosis risk.",
-  },
-  {
-    n: "04",
-    title: "Built for real farms",
-    body: "Works in existing mixers and rations for cattle, sheep and goats. No new feeding system required.",
-  },
-] as const;
-
 function HowItWorks() {
+  const t = useT();
+  const how = t.home.how;
+  const steps = how.steps.map((step, i) => ({ ...step, n: String(i + 1).padStart(2, "0") }));
   const sectionRef = useRef<HTMLElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -199,10 +180,10 @@ function HowItWorks() {
       <div className="how-works__sticky">
         <div className="how-works__media">
           <Image
-            src="/guide-feeding.jpg"
-            alt="Cattle feeding on an Aliplus ration"
+            src="/farm-bull-feeding.jpg"
+            alt={how.mediaAlt}
             fill
-            className="object-cover object-[center_45%]"
+            className="object-cover object-[40%_45%]"
             sizes="(max-width: 899px) 100vw, 50vw"
           />
         </div>
@@ -212,18 +193,18 @@ function HowItWorks() {
             <WordReveal
               as="h2"
               className="how-works__title"
-              text="How it works"
+              text={how.title}
               step={0.038}
             />
             <div className="how-works__desc">
               <WordReveal
                 className="how-works__lead"
-                text="Aliplus treats farm cereals so the ration works harder at the rumen — mix, mature, then feed."
+                text={how.lead}
                 delay={0.1}
                 step={0.024}
               />
               <Link href="/usage-guide" className="ghost-line-btn">
-                Open Usage Guide
+                {how.cta}
               </Link>
             </div>
           </div>
@@ -231,7 +212,7 @@ function HowItWorks() {
           <div
             ref={viewportRef}
             className="how-works__viewport"
-            aria-label="How it works steps"
+            aria-label={how.stepsAria}
           >
             <div ref={trackRef} className="how-works__track">
               {steps.map((step) => (
@@ -267,6 +248,8 @@ function HowItWorks() {
 }
 
 export function SystemSpotlight() {
+  const t = useT();
+  const w = t.home.whatIs;
   return (
     <>
       <section className="what-is">
@@ -275,40 +258,40 @@ export function SystemSpotlight() {
             <WordReveal
               as="h2"
               className="what-is__title"
-              text={"What is\nAliplus"}
+              text={w.title}
               step={0.038}
             />
             <WordReveal
               className="what-is__body"
-              text="Feed should work harder than it does. Aliplus is a farm-ready blend of fourteen natural components, mixed at 22 kg per ton of cereals to help animals use the nutrition already in the ration. It supports the rumen, raises protein and energy after 14 days of maturation, and fits the feeding system you already run."
+              text={w.body}
               delay={0.12}
               step={0.022}
             />
           </div>
 
-          <div className="what-is__orbit" aria-hidden>
-            <div className="what-is__photo">
-              <Image
-                src="/guide-grains.jpg"
-                alt=""
-                fill
-                className="object-cover object-center"
-                sizes="(max-width: 899px) 70vw, 28vw"
-              />
-            </div>
-          </div>
+          <figure className="what-is__product">
+            <Image
+              src="/aliplus-hands-cutout.png"
+              alt={w.productAlt}
+              width={1224}
+              height={1285}
+              className="what-is__product-img"
+              sizes="(max-width: 899px) 80vw, 30vw"
+              quality={95}
+            />
+          </figure>
 
           <div className="what-is__aside">
             <div>
               <WordReveal
                 as="h3"
                 className="what-is__aside-title"
-                text="What it is"
+                text={w.isTitle}
                 step={0.04}
               />
               <WordReveal
                 className="what-is__aside-body"
-                text="A structured blend of urea, plant extracts, oligoelements and clay that improves the nutritional value of farm cereals. Mixed on the farm, matured, then fed."
+                text={w.isBody}
                 delay={0.1}
                 step={0.022}
               />
@@ -317,13 +300,13 @@ export function SystemSpotlight() {
               <WordReveal
                 as="h3"
                 className="what-is__aside-title"
-                text="What it is not"
+                text={w.notTitle}
                 delay={0.06}
                 step={0.04}
               />
               <WordReveal
                 className="what-is__aside-body"
-                text="Not a complete feed, not a veterinary medicine, and not a replacement for good husbandry. Use only at the stated rate of 22 kg per ton."
+                text={w.notBody}
                 delay={0.14}
                 step={0.022}
               />

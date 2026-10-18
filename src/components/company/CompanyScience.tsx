@@ -292,9 +292,9 @@ export function CompanyScience() {
       if (how && !mobile) {
         markStep(how, 0);
         syncHowStep = () => {
-          const spacer = how.parentElement?.classList.contains("pin-spacer")
+          const spacer = (how.parentElement?.classList.contains("pin-spacer")
             ? how.parentElement
-            : how;
+            : how) as HTMLElement;
           const total = Math.max(1, spacer.offsetHeight - window.innerHeight);
           const passed = Math.min(total, Math.max(0, -spacer.getBoundingClientRect().top));
           markStep(
@@ -585,8 +585,8 @@ export function CompanyScience() {
             and finishing results come in.
           </p>
           <div className="cine-support__actions" data-cine>
-            <Link href="/calculator" className="ghost-fill-btn">
-              Open the calculator
+            <Link href="/contact" className="ghost-fill-btn">
+              Talk to our team
             </Link>
             <Link href="/contact" className="ghost-line-btn">
               Talk to our team

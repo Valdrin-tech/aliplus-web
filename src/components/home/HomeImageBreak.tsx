@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import { useEffect, useRef } from "react";
+import { useT } from "@/i18n/LocaleProvider";
 
 export function HomeImageBreak() {
+  const t = useT();
   const sectionRef = useRef<HTMLElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
 
@@ -59,12 +61,12 @@ export function HomeImageBreak() {
     <section
       ref={sectionRef}
       className="home-image-break"
-      aria-label="Cattle in an open barn"
+      aria-label={t.home.imageBreak.aria}
     >
       <div ref={mediaRef} className="home-image-break__media">
         <Image
-          src="/home-barn.jpg"
-          alt="Cattle standing in an open-sided barn"
+          src="/cattle-feeding-trough.jpg"
+          alt={t.home.imageBreak.alt}
           fill
           sizes="100vw"
           className="home-image-break__img"

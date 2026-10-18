@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/Link";
+import { useT } from "@/i18n/LocaleProvider";
 import { FieldProvenCards } from "@/components/home/FieldProvenCards";
 import { WordReveal } from "@/components/motion/WordReveal";
 
@@ -63,15 +66,9 @@ function SparkIcon() {
   );
 }
 
-const integratePoints = [
-  { icon: "mix" as const, label: "Mixes with wheat, barley, maize and other farm cereals" },
-  { icon: "drop" as const, label: "22 kg per ton — no new feeding system required" },
-  { icon: "shield" as const, label: "Stable through mixing, storage and daily feeding" },
-  { icon: "layers" as const, label: "Fits existing rations for cattle, sheep and goats" },
-  { icon: "spark" as const, label: "Advisor support for transition and fine-tuning" },
-];
+const integrateIcons = ["mix", "drop", "shield", "layers", "spark"] as const;
 
-function IntegrateIcon({ name }: { name: (typeof integratePoints)[number]["icon"] }) {
+function IntegrateIcon({ name }: { name: (typeof integrateIcons)[number] }) {
   if (name === "mix") return <MixIcon />;
   if (name === "drop") return <DropIcon />;
   if (name === "shield") return <ShieldIcon />;
@@ -80,6 +77,12 @@ function IntegrateIcon({ name }: { name: (typeof integratePoints)[number]["icon"
 }
 
 export function HomeClosing() {
+  const t = useT();
+  const fp = t.home.fieldProven;
+  const ig = t.home.integrate;
+  const fm = t.home.formats;
+  const cta = t.home.cta;
+  const integratePoints = ig.points.map((label, i) => ({ icon: integrateIcons[i] ?? "spark", label }));
   return (
     <>
       <section className="field-proven">
@@ -89,28 +92,22 @@ export function HomeClosing() {
               <WordReveal
                 as="h2"
                 className="field-proven__title"
-                text="Field-Proven."
+                text={fp.title}
                 step={0.038}
               />
               <WordReveal
                 className="field-proven__sub"
-                text="Across herds, cereals & farms."
+                text={fp.sub}
                 delay={0.1}
                 step={0.04}
               />
             </div>
-            <Link href="/products/aliplus" className="ghost-line-btn field-proven__cta">
-              See the product
+            <Link href="/usage-guide" className="ghost-line-btn field-proven__cta">
+              {fp.cta}
             </Link>
           </header>
 
           <FieldProvenCards />
-          <WordReveal
-            className="field-proven__foot"
-            text="Fourteen natural components, mixed at 22 kg per ton and matured for 14 days — used by farms feeding Aliplus every day."
-            delay={0.12}
-            step={0.022}
-          />
         </div>
       </section>
 
@@ -121,12 +118,12 @@ export function HomeClosing() {
               <WordReveal
                 as="h2"
                 className="integrate__title"
-                text={"Effortless to\nintegrate"}
+                text={ig.title}
                 step={0.038}
               />
               <WordReveal
                 className="integrate__lead"
-                text="Aliplus is designed to slip into existing routines without disruption. It does not replace nutrition — it helps animals use more of the cereals already on the farm."
+                text={ig.lead}
                 delay={0.12}
                 step={0.024}
               />
@@ -142,19 +139,26 @@ export function HomeClosing() {
               ))}
             </ul>
             <p className="integrate__link">
-              → Refer to the <Link href="/usage-guide">Usage Guide</Link> or{" "}
-              <Link href="/contact">consult</Link> the Aliplus livestock
-              nutrition team.
+              {ig.linkBefore} <Link href="/usage-guide">{ig.linkGuide}</Link> {ig.linkOr}{" "}
+              <Link href="/contact">{ig.linkConsult}</Link> {ig.linkAfter}
             </p>
           </div>
           <div className="integrate__media">
-            <Image
-              src="/guide-grains.jpg"
-              alt="Cereals ready to mix with Aliplus"
-              fill
-              className="object-cover object-center"
-              sizes="(max-width: 991px) 100vw, 50vw"
-            />
+            <div className="integrate__media-img">
+              <Image
+                src="/aliplus-granules.jpg"
+                alt={ig.mediaAlt}
+                fill
+                quality={90}
+                className="object-cover object-center"
+                sizes="(max-width: 991px) 100vw, 50vw"
+              />
+            </div>
+            <div className="integrate__media-fade" aria-hidden />
+            <p className="integrate__media-label">
+              <span>Aliplus</span>
+              {ig.labelText}
+            </p>
           </div>
         </div>
       </section>
@@ -165,40 +169,40 @@ export function HomeClosing() {
             <WordReveal
               as="h2"
               className="formats__title"
-              text="Formats & access"
+              text={fm.title}
               step={0.038}
             />
             <WordReveal
               className="formats__lead"
-              text="Start with a first mix on the cereals you already grow, then move to a full-farm ration. Advisors in Kosova help you plan the transition."
+              text={fm.lead}
               delay={0.12}
               step={0.024}
             />
             <div className="formats__actions">
               <Link href="/contact" className="ghost-fill-btn">
-                · Request a sample ·
+                {t.common.requestSample}
               </Link>
               <Link href="/contact" className="ghost-line-btn">
-                · Talk to our team ·
+                {t.common.talkToTeam}
               </Link>
             </div>
           </div>
 
           <article className="format-card">
             <div className="format-card__top">
-              <WordReveal as="h3" text="Starter mix" step={0.04} />
-              <WordReveal text="Coverage — first trials" delay={0.08} step={0.03} />
+              <WordReveal as="h3" text={fm.cards[0].title} step={0.04} />
+              <WordReveal text={fm.cards[0].coverage} delay={0.08} step={0.03} />
             </div>
             <WordReveal
               className="format-card__meta"
-              text="Ideal to begin on one group or one cereal"
+              text={fm.cards[0].meta}
               delay={0.12}
               step={0.024}
             />
             <div className="format-card__photo">
               <Image
-                src="/aliplus-wheat.jpg"
-                alt=""
+                src="/treated-cereals-pile.jpg"
+                alt={fm.cards[0].alt}
                 fill
                 className="object-cover object-center"
                 sizes="(max-width: 899px) 90vw, 28vw"
@@ -208,21 +212,21 @@ export function HomeClosing() {
 
           <article className="format-card">
             <div className="format-card__top">
-              <WordReveal as="h3" text="Full farm" step={0.04} />
-              <WordReveal text="Coverage — whole herd" delay={0.08} step={0.03} />
+              <WordReveal as="h3" text={fm.cards[1].title} step={0.04} />
+              <WordReveal text={fm.cards[1].coverage} delay={0.08} step={0.03} />
             </div>
             <WordReveal
               className="format-card__meta"
-              text="Ideal for mid- to large-scale operations"
+              text={fm.cards[1].meta}
               delay={0.12}
               step={0.024}
             />
             <div className="format-card__photo">
               <Image
-                src="/float-cereals.jpg"
-                alt=""
+                src="/farm-bull-feeding.jpg"
+                alt={fm.cards[1].alt}
                 fill
-                className="object-cover object-center"
+                className="object-cover object-[40%_45%]"
                 sizes="(max-width: 899px) 90vw, 28vw"
               />
             </div>
@@ -235,33 +239,33 @@ export function HomeClosing() {
           <WordReveal
             as="h2"
             className="home-cta__title"
-            text="Feed is your biggest cost. Aliplus turns it into your biggest advantage."
+            text={cta.title}
             step={0.038}
           />
           <WordReveal
             className="home-cta__lead"
-            text="Already used by farms across the region. Ready for your operation."
+            text={cta.lead}
             delay={0.16}
             step={0.028}
           />
           <div className="home-cta__actions">
             <Link href="/products/aliplus" className="ghost-fill-btn ghost-fill-btn--light">
-              · See the product ·
+              {t.common.seeProduct}
             </Link>
             <Link href="/contact" className="ghost-line-btn ghost-line-btn--light">
-              · Talk to our team ·
+              {t.common.talkToTeam}
             </Link>
           </div>
         </div>
         <div className="home-cta__mosaic" aria-hidden>
           <div className="home-cta__shot home-cta__shot--a">
-            <Image src="/aliplus-wheat-ears.jpg" alt="" fill className="object-cover" sizes="200px" />
+            <Image src="/treated-cereals-pile.jpg" alt="" fill className="object-cover" sizes="200px" />
           </div>
           <div className="home-cta__shot home-cta__shot--b">
-            <Image src="/hero-cows.jpg" alt="" fill className="object-cover object-[center_70%]" sizes="280px" />
+            <Image src="/aliplus-kosova-site.jpg" alt="" fill className="object-cover object-[70%_55%]" sizes="280px" />
           </div>
           <div className="home-cta__shot home-cta__shot--c">
-            <Image src="/guide-feeding.jpg" alt="" fill className="object-cover" sizes="180px" />
+            <Image src="/farm-bull-feeding.jpg" alt="" fill className="object-cover object-[40%_45%]" sizes="180px" />
           </div>
         </div>
       </section>
