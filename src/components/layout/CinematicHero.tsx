@@ -9,7 +9,6 @@ type Props = {
   imagePosition?: string;
   imageQuality?: number;
   unoptimized?: boolean;
-  crumbs: [string, string];
   title: string;
   tagline: string;
   body: string;
@@ -23,7 +22,6 @@ export function CinematicHero({
   imagePosition = "100% 0%",
   imageQuality = 95,
   unoptimized = false,
-  crumbs,
   title,
   tagline,
   body,
@@ -48,11 +46,6 @@ export function CinematicHero({
 
       <div className="home-hero__content hero-scene__copy">
         <div className="home-hero__heading">
-          <div className="home-hero__crumbs">
-            <WordReveal as="span" className="home-hero__crumb" text={crumbs[0]} slow delay={0.18} />
-            <span className="home-hero__dot" aria-hidden />
-            <WordReveal as="span" className="home-hero__crumb" text={crumbs[1]} slow delay={0.22} />
-          </div>
           <WordReveal
             as="h1"
             className="home-hero__title"

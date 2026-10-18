@@ -384,7 +384,6 @@ export function UsageGuideScience() {
         image="/guide-hero.jpg"
         imageAlt="Wheat field at last light"
         imagePosition="50% 62%"
-        crumbs={["Guide", "Usage Guide"]}
         title={"Usage\nGuide"}
         tagline="Mix. Mature. Feed."
         body="Prepare Aliplus on the farm with cereals you already grow, store it correctly, and feed a high-performance ration with the equipment you already have."

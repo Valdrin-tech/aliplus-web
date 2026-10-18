@@ -7980,3 +7980,9 @@ button,
     gap: 0.75rem 1.5rem;
   }
 }
+
+/* Home hero title: heavier weight, no crumbs above it. */
+.home-hero__title {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}

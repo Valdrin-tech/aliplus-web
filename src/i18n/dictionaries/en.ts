@@ -96,7 +96,6 @@ export const en = {
 
   home: {
     hero: {
-      crumbs: ["Products", "Aliplus"] as [string, string],
       title: "Aliplus\nFeed Additive",
       tagline: "More from every ration.",
       body: "Feed is your biggest cost — it does not have to be your biggest waste. Mix Aliplus with cereals you already grow to raise protein and energy, support the rumen, and turn every bite into measurable performance.",

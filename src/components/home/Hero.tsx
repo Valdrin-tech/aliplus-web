@@ -12,7 +12,6 @@ export function Hero() {
       imageAlt={h.imageAlt}
       imagePosition="80% 62%"
       unoptimized
-      crumbs={h.crumbs}
       title={h.title}
       tagline={h.tagline}
       body={h.body}
