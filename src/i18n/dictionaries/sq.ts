@@ -69,7 +69,7 @@ export const sq: Dictionary = {
   },
 
   footer: {
-    products: "Produktet",
+    products: "Produkti",
     guide: "Udhëzuesi",
     about: "Rreth nesh",
     faq: "Pyetjet e shpeshta",
@@ -299,9 +299,9 @@ export const sq: Dictionary = {
         meta: "Trajton 50 tonë",
       },
       {
-        name: "Big bag · 1100 kg",
-        role: "Pesëdhjetë tonë në një ngritje. Për fermat që punojnë seriozisht dhe mikserët që punojnë gjithë ditën.",
-        meta: "Trajton 50 tonë",
+        name: "Big bag · 1000 kg",
+        role: "Dyzet e pesë tonë në një ngritje. Për fermat që punojnë seriozisht dhe mikserët që punojnë gjithë ditën.",
+        meta: "Trajton 45 tonë",
       },
     ],
     ctaTitle: "Drithërat tuaja janë gati për një ngritje.",
@@ -461,7 +461,7 @@ export const sq: Dictionary = {
     formats: [
       { label: "Thes 22 kg", meta: "Trajton 1 ton", note: "Një thes për ton drithëra." },
       { label: "Paletë · 50 thasë", meta: "Trajton 50 tonë", note: "Një sezon racionesh në një paletë." },
-      { label: "Big bag · 1100 kg", meta: "Trajton 50 tonë", note: "Pesëdhjetë tonë në një ngritje." },
+      { label: "Big bag · 1000 kg", meta: "Trajton 45 tonë", note: "Dyzet e pesë tonë në një ngritje." },
     ],
     keyPointsTitle: "Katër pika kyçe",
     pillars: [

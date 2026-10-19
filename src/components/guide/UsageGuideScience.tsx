@@ -88,7 +88,7 @@ const farmCards: { icons: IconType[]; title: string; body: ReactNode }[] = [
 const packs = [
   { kind: "bag" as const, src: "/aliplus-bag-cutout.png", w: 583, h: 1046, label: "22 kg bag", meta: "Treats 1 ton", note: "One bag, one ton of your own cereals." },
   { kind: "pallet" as const, src: "/aliplus-pallet-cutout.png", w: 551, h: 800, label: "Pallet · 50 bags", meta: "Treats 50 tons", note: "A season of rations on one pallet." },
-  { kind: "big" as const, src: "/aliplus-bigbag-cutout.png", w: 690, h: 800, label: "Big bag · 1100 kg", meta: "Treats 50 tons", note: "Fifty tons in one lift." },
+  { kind: "big" as const, src: "/aliplus-bigbag-cutout.png", w: 690, h: 800, label: "Big bag · 1000 kg", meta: "Treats 45 tons", note: "Forty-five tons in one lift." },
 ];
 
 const steps: { icon: IconType; n: string; when: string; title: string; body: ReactNode }[] = [

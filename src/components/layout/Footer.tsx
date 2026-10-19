@@ -45,6 +45,9 @@ export function Footer() {
               <br />
               {t.footer.promptLine2}
             </p>
+            <a className="site-footer__phone" href={`tel:${site.phone.replace(/\s/g, "")}`}>
+              {site.phone}
+            </a>
             <a className="site-footer__email" href={`mailto:${site.email}`}>
               {site.email}
             </a>

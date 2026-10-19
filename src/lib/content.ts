@@ -3,16 +3,16 @@ export const site = {
   region: "Kosova",
   legalName: "Aliplus Kosova",
   tagline: "Nutrition vivante pour ruminants",
-  phone: "04 70 31 04 55",
-  email: "contact@france-aliplus.fr",
+  phone: "+383 48 807 007",
+  email: "apluskosova.shpk@gmail.com",
   address: {
-    line1: "53 route de Lenax",
-    city: "03130 Neuilly-en-Donjon",
-    country: "France",
+    line1: "Rufc i Ri",
+    city: "14000 Lipjan",
+    country: "Kosovë",
   },
   hours: "8h00–12h30 · 14h00–18h30 — sur rendez-vous",
   locationName: "Lipjan, Kosovë",
-  mapsUrl: "https://www.google.com/maps/search/?api=1&query=Aliplus+Kosova+Lipjan",
+  mapsUrl: "https://maps.app.goo.gl/3qJK4xzynq3yJhSp7",
 } as const;
 
 export const nav = {

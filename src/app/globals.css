@@ -7986,3 +7986,55 @@ button,
   font-weight: 700;
   letter-spacing: -0.025em;
 }
+
+/* Home · Formats card titles: two-line Albanian titles need line spacing. */
+.format-card__top h3 {
+  line-height: 1.08;
+}
+
+/* Footer · phone line above the email */
+.site-footer__phone {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  margin-top: 0.1rem;
+  color: #4e5c24;
+  font-family: var(--font-aeonik);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.site-footer__phone::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s ease;
+}
+
+.site-footer__phone:hover::after {
+  transform: scaleX(1);
+}
+
+.site-footer__phone + .site-footer__email {
+  margin-top: 0.1rem;
+}
+
+/* Contact · address links to the map */
+a.contact-sheet__place {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+a.contact-sheet__place:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}

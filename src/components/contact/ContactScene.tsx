@@ -116,13 +116,13 @@ export function ContactScene({ children }: { children: ReactNode }) {
             </div>
             <div className="contact-sheet__meta-item">
               <span className="contact-sheet__meta-label">{c.address}</span>
-              <p className="contact-sheet__place">
+              <a className="contact-sheet__place" href={site.mapsUrl} target="_blank" rel="noopener noreferrer">
                 {site.address.line1}
                 <br />
                 {site.address.city}
                 <br />
                 {site.address.country}
-              </p>
+              </a>
             </div>
           </div>
         </div>

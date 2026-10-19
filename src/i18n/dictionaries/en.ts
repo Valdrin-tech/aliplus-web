@@ -69,7 +69,7 @@ export const en = {
   },
 
   footer: {
-    products: "Products",
+    products: "Product",
     guide: "Guide",
     about: "About",
     faq: "FAQ",
@@ -299,9 +299,9 @@ export const en = {
         meta: "Treats 50 tons",
       },
       {
-        name: "Big bag · 1100 kg",
-        role: "Fifty tons in one lift. For farms that mean business and mixers that run all day.",
-        meta: "Treats 50 tons",
+        name: "Big bag · 1000 kg",
+        role: "Forty-five tons in one lift. For farms that mean business and mixers that run all day.",
+        meta: "Treats 45 tons",
       },
     ],
     ctaTitle: "Your cereals are ready for a promotion.",
@@ -462,7 +462,7 @@ export const en = {
     formats: [
       { label: "22 kg bag", meta: "Treats 1 ton", note: "One bag per ton of cereals." },
       { label: "Pallet · 50 bags", meta: "Treats 50 tons", note: "A season of rations on one pallet." },
-      { label: "Big bag · 1100 kg", meta: "Treats 50 tons", note: "Fifty tons in one lift." },
+      { label: "Big bag · 1000 kg", meta: "Treats 45 tons", note: "Forty-five tons in one lift." },
     ],
     keyPointsTitle: "Four key points",
     pillars: [
