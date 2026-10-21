@@ -8038,3 +8038,28 @@ a.contact-sheet__place:hover {
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
+
+/* Contact form · sending state, error line, honeypot */
+.sheet-honeypot {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.sheet-form__error {
+  margin: 0;
+  color: #b3261e;
+  font-family: var(--font-aeonik);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+.sheet-form .ghost-line-btn[disabled] {
+  opacity: 0.6;
+  pointer-events: none;
+}

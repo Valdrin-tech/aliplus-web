@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useId, useRef, useState, type ReactNode } from "react";
-import { useT } from "@/i18n/LocaleProvider";
+import { useLocale, useT } from "@/i18n/LocaleProvider";
 
 const topicValues = ["general", "ration", "product", "visit", "usage"] as const;
 
@@ -156,9 +156,12 @@ function ContactSelect({
 
 export function ContactForm() {
   const t = useT().contact.form;
+  const locale = useLocale();
   const [fields, setFields] = useState<Fields>(empty);
   const [errors, setErrors] = useState<Partial<Record<keyof Fields, string>>>({});
   const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
+  const [company, setCompany] = useState(""); // honeypot, hidden from people
 
   function set<K extends keyof Fields>(key: K, value: Fields[K]) {
     setFields((prev) => ({ ...prev, [key]: value }));
@@ -170,7 +173,7 @@ export function ContactForm() {
     });
   }
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const next: Partial<Record<keyof Fields, string>> = {};
     for (const key of required) {
@@ -181,7 +184,21 @@ export function ContactForm() {
     }
     setErrors(next);
     if (Object.keys(next).length) return;
-    setSent(true);
+
+    setStatus("sending");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...fields, locale, company }),
+      });
+      const result = (await res.json().catch(() => null)) as { ok?: boolean } | null;
+      if (!res.ok || !result?.ok) throw new Error("send failed");
+      setStatus("idle");
+      setSent(true);
+    } catch {
+      setStatus("error");
+    }
   }
 
   if (sent) {
@@ -273,8 +290,28 @@ export function ContactForm() {
         )}
       </Field>
 
-      <button className="ghost-line-btn" type="submit">
-        {t.submit}
+      {/* Honeypot: hidden from people, filled by bots. */}
+      <div className="sheet-honeypot" aria-hidden>
+        <label htmlFor="contact-company">Company</label>
+        <input
+          id="contact-company"
+          name="company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+        />
+      </div>
+
+      {status === "error" ? (
+        <p className="sheet-form__error" role="alert">
+          {t.sendError}
+        </p>
+      ) : null}
+
+      <button className="ghost-line-btn" type="submit" disabled={status === "sending"} aria-busy={status === "sending"}>
+        {status === "sending" ? t.sending : t.submit}
       </button>
     </form>
   );

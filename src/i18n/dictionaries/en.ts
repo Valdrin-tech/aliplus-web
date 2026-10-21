@@ -566,6 +566,8 @@ export const en = {
       subject: "Subject",
       message: "Message",
       submit: "Submit",
+      sending: "Sending…",
+      sendError: "Something went wrong and the message was not sent. Please try again or write to us directly by email.",
       required: "This field is required",
       invalidEmail: "Enter a valid email",
       sentTitle: "Message sent",

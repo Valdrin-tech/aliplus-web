@@ -565,6 +565,8 @@ export const sq: Dictionary = {
       subject: "Subjekti",
       message: "Mesazhi",
       submit: "Dërgo",
+      sending: "Duke dërguar…",
+      sendError: "Diçka shkoi keq dhe mesazhi nuk u dërgua. Provoni përsëri ose na shkruani direkt në email.",
       required: "Kjo fushë është e detyrueshme",
       invalidEmail: "Shkruani një email të vlefshëm",
       sentTitle: "Mesazhi u dërgua",
