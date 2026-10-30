@@ -7,7 +7,7 @@ const unprefixed = "/:path((?!sq(?:/|$)|en(?:/|$)|_next|api|.*\\..*).*)";
 
 const nextConfig: NextConfig = {
   images: {
-    qualities: [75, 95],
+    qualities: [75, 90, 95],
   },
   async redirects() {
     return [
